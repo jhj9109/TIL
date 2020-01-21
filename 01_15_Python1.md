@@ -1,6 +1,6 @@
 # Python의 문법
 
-## 1.저장
+## Ⅰ. 저장
 
 - 저장의 개념은? Save?
 - 무엇을, 어떻게 저장 할 수 있는가
@@ -17,7 +17,7 @@
   2. 리스트(List) : 여러 박스를 붙임 `[ ]`를 사용
   3.  딕셔너리(Dictionary) : 견출지를 붙임 `{ }`를 사용
 
-#### 실습
+### (1) 실습
 
 - 프린트 & 리스트 & 딕셔너리 활용
 
@@ -44,24 +44,16 @@ print (f"{food}입니다. 전화번호는 {phone_book[food]}입니다.") #3.6부
 print ("{}입니다. 전화번호는 {}입니다.".format(food,phone_book[food])) #3.6이전 f스트링
 ```
 
-#### 추천강의
 
-- 코세라 앤드류웅(스탠퍼드) 딥러닝
-- CS90 컴퓨터구조
-- udacity : 하이엔드 교육 >>> 머신러닝 개론 introduction to machine learning udacicy
-- Mooc 플랫폼
-- 파이썬
-  - introduction to copter science python (edx.org)
-  - berkeley 61a SCIP
 
-## 2.조건
+## Ⅱ 조건
 
 > if(True) : func()
 
 - 코드블록을 들여쓰기(Indantaion)으로 형성
 - 들여쓰기 : 1Tab or 4Space
 
-#### 실습
+### (1) 실습
 
 ```python
 import requests
@@ -90,13 +82,13 @@ else :
 
 
 
-## 3.반복
+## Ⅲ 반복
 
 > while 조건문 : func()	조건문이 True인 동안 반복, 종료조건이 필요
 >
 > for i in List : func()	정해진 범위 안에서 순회, 정해진 횟수 반복하므로 종료조건 불필요
 
-#### 실습
+### (1) 실습
 
 ```python
 for i in range(5):
@@ -107,7 +99,15 @@ while n<5:
   print('안녕하세요!')
 ```
 
+## Ⅳ. 추천강의
 
+- 코세라 앤드류웅(스탠퍼드) 딥러닝
+- CS90 컴퓨터구조
+- udacity : 하이엔드 교육 >>> 머신러닝 개론 introduction to machine learning udacicy
+- Mooc 플랫폼
+- 파이썬
+  - introduction to copter science python (edx.org)
+  - berkeley 61a SCIP
 
 # API
 
@@ -124,15 +124,21 @@ while n<5:
 
 
 
-### Python함수
+# Python 함수
 
-- 내장함수
-- 외장함수 : ex) random.choice(리스트) , random.sample(리스트,갯수)
-- 샘플링 : 비복원추출 (ex. 로또번호)
+>내장함수
+>
+>외장함수 : ex) random.choice(리스트) , random.sample(리스트,갯수)
+>
+>샘플링 : 비복원추출 (ex. 로또번호)
 
-#### 실습
 
-> 로또추첨기
+
+# 실습
+
+## Ⅰ. 로또추첨기
+
+
 
 ```python
 # 아래에 코드를 작성하세요.
