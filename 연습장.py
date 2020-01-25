@@ -1,5 +1,10 @@
-num = input()
-result=0
-for n in num:
-    result += int(n)
-print(result)
+0 2 / 1 1 / 2 0
+
+-1 1/ 0 0 / 1 -1
+
+-2 0/-1 -1/ 0 -2
+
+원래
+0 0 / 0 1 / 0 2
+1 0 / 1 1 / 1 2
+2 0 / 2 1 / 2 2
