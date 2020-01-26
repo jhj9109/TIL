@@ -762,9 +762,72 @@ for T in range(T):
 
 ###### 1961.숫자 배열 회전 
 
-###### 1966.숫자를 정렬하자 
+### 1966.숫자를 정렬하자 
 
-###### 1970.쉬운 거스름돈
+```python
+T = int(input())
+for T in range(T):
+    length = int(input())
+    numbers = sorted(list(map(int, input().split(' '))))
+    print('#{}'.format(T+1),end=' ')
+    for number in numbers:
+        print(number,end=' ')
+    print('')
+    
+"""
+    length = int(input())
+    numbers = list(map(int, input().split(' ')))
+    idxs = list()
+    
+    for number in numbers:
+        temp = 0
+        for i in range(length):
+            if numbers[i] < number :
+                temp +=1 #temp 0~N-1 순위
+        
+        idxs.append(temp)
+    temp = list(range(length))
+    for i, idx in enumerate(idxs):
+        temp[idx] = i
+    print('#{}'.format(T+1),end=' ')
+    for n in temp:
+        print(numbers[n],end=' ')
+    print('')
+"""
+```
+
+
+
+### 1970.쉬운 거스름돈
+
+```python
+#coins = [ 50000, 10000, 5000, 1000, 500, 100, 50, 10 ]
+dict_coins ={
+    50000 : 0,
+    10000 : 0,
+    5000 : 0,
+    1000 : 0,
+    500 : 0,
+    100 : 0,
+    50 : 0,
+    10 : 0,
+}
+T = int(input())
+
+for T in range(T):
+    cost = int(input())
+    for key, val in dict_coins.items():
+        dict_coins[key] = cost // key
+        cost = cost % key
+        #if cost == 1 :
+            #dict_coins[10] = 1
+    print('#{}'.format(T+1))
+    for key in dict_coins:
+        print (dict_coins[key],end=' ')
+    print('')
+```
+
+
 
 
 
@@ -772,11 +835,48 @@ for T in range(T):
 
 ###### 1979.어디에 단어가 들어갈 수 있을까
 
-###### 1984.중간 평균값 구하기
+### 1984.중간 평균값 구하기
+
+```python
+T=int(input())
+for T in range(T):
+    data_input = list(map(int,input().strip().split(' ')))
+    result = round( (sum(data_input) - max(data_input) - min(data_input) ) / 8 )
+    print('#{} {}'.format(T+1,result))
+    
+    
+"""
+    sum_num, max_num, min_num = 0, 0, 0
+    for data in data_input:
+        if data > max_num:
+            max_num=data
+        elif data < min_num :
+            min_num = data
+        sum_num += data
+    print('#{} {}'.format(T+1,round( (sum_num-max_num-min_num)/8 ) ))
+"""
+```
+
+
 
 ###### 1986.지그재그 숫자
 
 ###### 1989.초심자의 회문 검사
+
+```python
+T= int(input())
+for T in range(T):
+    result=1
+    words = input() #string
+    
+    for i in range( len(words) // 2) :
+        if words[i] != words[-i-1]:
+            result=0
+            break
+    print('#{} {}'.format(T+1, result))
+```
+
+
 
 ###### 2001.파리 퇴치
 
