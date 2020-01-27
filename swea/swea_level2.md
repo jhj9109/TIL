@@ -4,7 +4,6 @@
 
 1204.[S/W 문제해결 기본] 1일차 - 최빈수 구하기
 1284.수도 요금 경쟁
-1285.아름이의 돌 던지기
 1288.새로운 불면증 치료법 
 1859.백만 장자 프로젝트
 1926.간단한 369게임
@@ -29,7 +28,7 @@
 2005.파스칼의 삼각형
 2007.패턴 마디의 길이
 
-### 1204.[S/W 문제해결 기본] 1일차 - 최빈수 구하기 - 미해결
+### 1204.[S/W 문제해결 기본] 1일차 - 최빈수 구하기
 
 어느 고등학교에서 실시한 1000명의 수학 성적을 토대로 통계 자료를 만들려고 한다.
 이때, 이 학교에서는 최빈수를 이용하여 학생들의 평균 수준을 짐작하는데, 여기서 최빈수는 특정 자료에서 가장 여러 번 나타나는 값을 의미한다.
@@ -46,21 +45,24 @@
 #부호와 함께 테스트 케이스의 번호를 출력하고, 공백 문자 후 테스트 케이스에 대한 답을 출력한다.
 
 ```python
-import collections
 T = int(input())
 
-for i in range(T):
+for T in range(T):
     n = int(input())
-    numbers=list(map(int,input().split(' ')))
-    dict_cnt = dict(collections.Counter(numbers))
-    max_cnt = max(dict_cnt.values())
-    temp=0
-    for k in dict_cnt.keys():
-        print(k)
-        if dict_cnt[k] == max_cnt:
-            temp = k
-    else:
-        print('#{} {}'.format(n,temp))
+    numbers=list(map(int,input().strip().split(' ')))
+    cases = sorted(list(set(numbers)))
+   # print(cases)
+    max_cnt = 0
+    max_num = 0
+    for case in cases:
+        temp_cnt = 0
+        for number in numbers:
+            if number == case:
+                temp_cnt +=1
+        if temp_cnt >= max_cnt :
+            max_cnt = temp_cnt
+            max_num = case
+    print('#{} {}'.format(n, max_num))
 ```
 
 
@@ -98,21 +100,6 @@ for i in range(T):
     else:
         print('#{} {}'.format(i+1, pay_A))
 ```
-
-### 1285.아름이의 돌 던지기 C++만 제출
-
-아름이를 포함하여 총 N명의 사람이 돌 던지기 게임을 하고 있다.
-이 돌 던지기 게임은 앞으로 돌을 던져 원하는 지점에 최대한 가깝게 돌을 던지는 게임이다.
-정확하게 말하면 밀리미터 단위로 -100,000에서 100,000까지의 숫자가 일렬로 써져 있을 때, 사람들은 숫자 100,000이 써져 있는 위치에 서서 최대한 0에 가까운 위치로 돌을 던지려고 한다.
-N명의 사람들이 던진 돌이 떨어진 위치를 측정한 자료가 주어질 때, 가장 0에 가깝게 돌이 떨어진 위치와 0 사이의 거리 차이와 몇 명이 그렇게 돌을 던졌는지를 구하는 프로그램을 작성하라.
-[입력]
-첫 번째 줄에 테스트 케이스의 수 T가 주어진다.
-각 테스트 케이스의 첫 번째 줄에는 돌을 던지는 사람의 수 N(1≤N≤1,000)이 주어진다.
-두 번째 줄에는 각 사람이 돌을 던졌을 때 돌이 떨어진 위치를 나타내는 N개의 정수가 공백으로 구분되어 주어진다.
-모든 사람이 돌을 그럭저럭 잘 던졌기 때문에, 돌이 떨어지는 위치는 항상   -100,000에서 100,000사이 범위의 정수이다. (-100,000과 100,000도 돌이 떨어질 수 있다.)
-[출력]
-각 테스트 케이스마다 ‘#x’(x는 테스트케이스 번호를 의미하며 1부터 시작한다)를 출력하고,
-돌이 가장 0에 가깝게 떨어진 곳과 0 사이의 거리 차이와 그렇게 던진 사람이 몇 명인지 나타내는 정수를 공백 하나로 구분하여 출력한다.
 
 ### 1288.새로운 불면증 치료법 
 
@@ -256,7 +243,7 @@ for t in range(T):
 
 
 
-### 1928.Base64 Decoder
+### 1928.Base64 Decoder x
 
 다음과 같이 Encoding 을 한다.
     1. 우선 24비트 버퍼에 위쪽(MSB)부터 한 byte씩 3 byte의 문자를 집어넣는다.
@@ -274,49 +261,49 @@ for t in range(T):
 (t는 테스트 케이스의 번호를 의미하며 1부터 시작한다.)
 
 ```python
-# dec = dict()
-# for i in range(26):
-#     dec[i] = chr(ord(A)+i)
-# for i in range(26,52):
-#     dec[i] = chr(ord(a)+i)
-# for i in range(52.62):
-#     dec[i] = str(i)
-# dec[62] = '+'
-# dec[63] = '/'
+#print (0b01001100)
+#print (chr(76))
 
-T=int(input())
-dec = dict() #dec[문자] = int
-for i in range(26):
-    dec[chr(ord('A')+i)] = i
-for i in range(26,52):
-    dec[chr(ord('a')+i-26)] = i
-for i in range(52,62):
-    dec[str(i-52)] = i
-dec['+'] = 62
-dec['/'] = 63
-#print(type(dec))
-#print(dec)
-for t in range(T):
+#print('A:{},Z:{},a:{},z:{},0:{},1:{},9:{},+:{},/:{}'.format(ord('A'),ord('Z'),ord('a'),ord('z'),ord('0'),ord('1'),ord('9'),ord('+'),ord('/')))
+#A:65,Z:90,a:97,z:122,0:48,9:57,+:43,/:47
+#A~Z : -65 a~z : -71 0~9 : +4 : # : +19 / : +16
 
-    data = input() #str
-    str_data =''
-    cnt= temp0 = temp1 =temp2 =0
+T= int(input())
+for T in range(T):
+    sts = input()
     
-    for d in data: #str을 순회
-        if (cnt%4)==0:
-            temp0 += dec[d]*4
-        elif (cnt%4) == 1:
-            temp0 += dec[d]//16
-            temp1 += (dec[d]%16)*16
-        elif (cnt%4) == 2:
-            temp1 += (dec[d]//4)
-            temp2 += (dec[d]%4)*64
-        else :
-            temp1 += dec[d]
-            str_data += chr(temp0) + chr(temp1) + chr(temp2)
-            temp0 = temp1 = temp2 = 0
-        cnt += 1
-    print('#{} {}'.format(t+1,str_data))
+    print('#{} '.format(T+1),end='')
+    st = [0,0,0,0]
+    i=0
+    for idx, val in enumerate(sts):
+        #print(val,end='')
+        if 'A' <= val <= 'Z':
+            st[idx%4] = ord(val) - 65
+        elif 'a' <= val <= 'z':
+            st[idx%4] = ord(val) - 71
+        elif '0' <= val <= '9':
+            st[idx%4] = ord(val) + 4
+        elif '+' == val:
+            st[idx%4] = ord(val) + 19
+        elif '/' == val:
+            st[idx%4] = ord(val) + 16
+        if idx % 4 == 3:
+#24개받기 = 문자열4개 받기 st1 st2 st3 st4
+#문자 1: st1*4 + (st2//16)
+#문자 2: (st2%16)*16 + (st3//4)
+#문자 3: (st3%4)*64 + st4
+            st0 ,st1, st2 = '' , '' , ''
+            st0 = st[0]*4 + (st[1]//16)
+            st1 = (st[1]%16)*16 + (st[2]//4)
+            st2 = (st[2]%4)*64 + st[3]
+            #print (' : ', end='')
+            print (chr(st0),end='')
+            print (chr(st1),end='')
+            print (chr(st2),end='')
+            #print ('')
+
+    print('')
+    
 ```
 
 ### 1940. 가랏! RC카!
@@ -600,7 +587,7 @@ for t in range(T):
     print('#{} {}'.format(t+1,result))
 ```
 
-### 1974.스도쿠 검증 - 미해결
+### 1974.스도쿠 검증
 
 9x9 스도쿠
 검증 O : 1 , 검증 X : 0
@@ -618,41 +605,41 @@ for t in range(T):
 ```python
 T = int(input())
 for T in range(T):
-    result = 1
-    data_list = data_list2 = data_list3 = list()
+    data = list()
     for _ in range(9):
-        data_list.append(list())
-    for _ in range(9):
-        data_list2.append(list())
-    for _ in range(9):
-        data_list3.append(list())
-
-    for i in range(9):
-        temp = list(map(int, input().split(' ')))
-        data_list[i] += temp #리스트 1개당 1줄씩
-    #print (data_list)
-
-    for i in range(3):
-        for k in range(3):
-            data_list2[i*3+0] += data_list[i*3+k][0:3]
-            data_list2[i*3+1] += data_list[i*3+k][3:6]
-            data_list2[i*3+2] += data_list[i*3+k][6:9]
+        data.append(list(map(int, input().strip().split(' '))))
+ #   print (data)
     
-    for i in range(9):
-        for k in range(9):
-            data_list3[i] += data_list[k][i]
-    sum_data = []
-    sum_data.append(data_list,data_list2,data_list3)
-    for datas in sum_data:
-        for data in datas:
-            if len(data) != len(list(set(data))) :
-                result=0
-                print('#{} {}'.format(T+1, result))
-                break
-        if result==0:
-            break
-    if result == 1:
-        print('#{} {}'.format(T+1, result))
+    result = 1 #초기값
+    #row 검증
+    for idx, numbers in enumerate(data):
+        for num in range (1,10):
+            if not ( num in numbers) :
+                #print('row 걸림, idx : {} num : {}'.format(idx, num))
+                result = 0
+   
+    #col 검증
+    for x in range(9):
+        temp = list()
+        for y in range(9):
+            temp.append(data[y][x])
+            
+        for num in range(1,10):
+            if not ( num in temp):
+                #print('col 걸림, x : {}, y : {}, num : {}'.format(x, y, num))
+                result = 0
+    
+    for x in range(0,9,3):
+        temp = list()
+        for y in range(0,9,3):
+            for xi in range(3):
+                for yi in range(3):
+                    temp.append(data[y+yi][x+xi])
+            for num in range(1,10):
+                if not ( num in temp):
+                    #print('box 걸림, x : {}, y : {}, num : {}'.format(x, y, num))
+                    result = 0
+    print('#{} {}'.format(T+1,result))
 ```
 
 
@@ -758,12 +745,89 @@ for T in range(T):
 ```
 
 
-###### 1926.간단한 369게임
+### 1926.간단한 369게임
 
-###### 1961.숫자 배열 회전 
+3 6 9 게임을 프로그램으로 제작중이다. 게임 규칙은 다음과 같다.
+1. 숫자 1부터 순서대로 차례대로 말하되, “3” “6” “9” 가 들어가 있는 수는 말하지 않는다.
+  1 2 3 4 5 6 7 8 9…
+2. "3" "6" "9"가 들어가 있는 수를 말하지 않는대신, 박수를 친다. 이 때, 박수는 해당 숫자가 들어간 개수만큼 쳐야 한다.  
+예를 들어 숫자 35의 경우 박수 한 번, 숫자 36의 경우 박수를 두번 쳐야 한다.
+입력으로 정수 N 이 주어졌을 때, 1~N 까지의 숫자를
+게임 규칙에 맞게 출력하는 프로그램을 작성하라.
+박수를 치는 부분은 숫자 대신, 박수 횟수에 맞게 “-“ 를 출력한다.
+여기서 주의해야 할 것은 박수 한 번 칠 때는 - 이며, 박수를 두 번 칠 때는 - - 가 아닌 -- 이다. 
+[제약사항]
+N은 10이상 1,000이하의 정수이다. (10 ≤ N ≤ 1,000)
+[입력]
+입력으로 정수 N 이 주어진다.
+[출력]
+1 ~ N까지의 숫자를 게임 규칙에 맞게 출력한다.
 
-### 1966.숫자를 정렬하자 
+```python
+N = int(input())
 
+for N in range(1,N+1):
+    result=0
+    num_list = [int(N) for N in str(N)]
+    #print(num_list)
+    for num in num_list:
+        if num % 3 == 0 and num != 0 :
+            result+=1
+    if result == 0 :
+        print(N, end=' ')
+    else:
+        print('-'*result,end=' ')
+print('')
+```
+
+
+### 1961.숫자 배열 회전 x
+
+```python
+T = int(input().strip())
+for T in range(T):
+    N = int(input().strip())
+    
+    data_0 = list()
+    for _ in range(N):
+        data_0.append( list(map(int, input().strip().split(' '))) )
+    data_90 = list()
+    
+    for y in range(N):
+        temp = list()
+        for x in range(N):
+            #data_90[ x ][ x + (-x-y+N-1) ] = data_0[y][x]
+            #print('y,x : {},{}'.format(y,x))
+            temp.append(data_0[-x+(N-1)][y])
+        data_90.append(temp)
+
+    data_180 = list()
+    for y in range(N):
+        temp = list()
+        for x in range(N):
+            temp.append(data_90[-x+(N-1)][y])
+        data_180.append(temp)
+
+    data_270 = list()
+    for y in range(N):
+        temp = list()
+        for x in range(N):
+            temp.append(data_180[-x+(N-1)][y])
+        data_270.append(temp)
+    print('#{}'.format(T+1))
+    for a in range(N):
+        for b in range(N):
+            print('{}'.format(data_90[a][b]),end='')
+        print('',end=' ')
+        for b in range(N):
+            print('{}'.format(data_180[a][b]),end='')
+        print('',end=' ')
+        for b in range(N):
+            print('{}'.format(data_270[a][b]),end='')
+        print('')
+```
+
+### 1966.숫자를 정렬하자
 ```python
 T = int(input())
 for T in range(T):
@@ -774,7 +838,7 @@ for T in range(T):
         print(number,end=' ')
     print('')
     
-"""
+""" 중복값을 처리하지 못해 아래 거는 사용 못함 ㅠㅠ 
     length = int(input())
     numbers = list(map(int, input().split(' ')))
     idxs = list()
@@ -795,8 +859,6 @@ for T in range(T):
     print('')
 """
 ```
-
-
 
 ### 1970.쉬운 거스름돈
 
@@ -827,41 +889,117 @@ for T in range(T):
     print('')
 ```
 
+### 1976.시각 덧셈
 
+```python
+T = int(input())
+for T in range(T):
+    y1, m1, y2, m2 = list(map(int, input().strip().split(' ')))
+    m = (m1+m2)%60
+    y = (y1 + y2 + (m1+m2)//60)%13 + (y1 + y2 + (m1+m2)//60)//13
+    print ('#{} {} {}'.format(T+1, y, m))
+```
 
+### 1979.어디에 단어가 들어갈 수 있을까
 
-
-###### 1976.시각 덧셈
-
-###### 1979.어디에 단어가 들어갈 수 있을까
+```python
+T = int(input())
+for T in range(T):
+    N, K = list(map(int, input().split(' ')))
+    
+    result = 0
+    data = list()
+    for _ in range(N):
+        temps = list(map(int, input().strip().split(' ')))
+        data.append(temps)
+    
+    for i in range(N):
+        cnt = 0
+        for k in range(N):
+            if data[k][i] == 1:
+                cnt +=1
+                if cnt == K and k == N-1:
+                    result += 1
+            else :
+                if cnt == K :
+                    result += 1
+                cnt = 0
+    
+    for i in range(N):
+        cnt = 0
+        for k in range(N):
+            if data[i][k] == 1:
+                cnt +=1
+                if cnt == K and k == N-1:
+                    result += 1
+            else :
+                if cnt == K :
+                    result += 1
+                cnt = 0
+    print('#{} {}'.format(T+1, result))
+                    
+```
 
 ### 1984.중간 평균값 구하기
+
+10개의 수를 입력 받아, 최대 수와 최소 수를 제외한 나머지의 평균값을 출력하는 프로그램을 작성하라.
+(소수점 첫째 자리에서 반올림한 정수를 출력한다.)
+[제약 사항]
+각 수는 0 이상 10000 이하의 정수이다.
+[입력]
+가장 첫 줄에는 테스트 케이스의 개수 T가 주어지고, 그 아래로 각 테스트 케이스가 주어진다.
+각 테스트 케이스의 첫 번째 줄에는 10개의 수가 주어진다.
+[출력]
+출력의 각 줄은 '#t'로 시작하고, 공백을 한 칸 둔 다음 정답을 출력한다.
+(t는 테스트 케이스의 번호를 의미하며 1부터 시작한다.)
 
 ```python
 T=int(input())
 for T in range(T):
     data_input = list(map(int,input().strip().split(' ')))
     result = round( (sum(data_input) - max(data_input) - min(data_input) ) / 8 )
-    print('#{} {}'.format(T+1,result))
-    
-    
-"""
-    sum_num, max_num, min_num = 0, 0, 0
+    print('#{} {}'.format(T+1,result))   
+"""두번째 버전
+T=int(input())
+for T in range(T):
+    data_input = list(map(int,input().strip().split(' ')))
+    sum_num, max_num, min_num = 0, 0, 10000
     for data in data_input:
         if data > max_num:
-            max_num=data
-        elif data < min_num :
+            max_num = data
+        if data < min_num :
             min_num = data
         sum_num += data
-    print('#{} {}'.format(T+1,round( (sum_num-max_num-min_num)/8 ) ))
+    result = round( (sum_num - max_num - min_num) / 8 )
+    print('#{} {}'.format(T+1, result ))
 """
 ```
 
+### 1986.지그재그 숫자 
 
+```python
+T = int(input())
+for T in range(T):
+    N = int(input())
+    result = 0
+    for i in range (1,N+1,2):
+        result += i
+    for k in range (2,N+1,2):
+        result -= k
+    print('#{} {}'.format(T+1, result))
+```
 
-###### 1986.지그재그 숫자
+### 1989.초심자의 회문 검사
 
-###### 1989.초심자의 회문 검사
+회문이면 1, 아니면 0을 출력
+[제약 사항]
+각 단어의 길이는 3 이상 10 이하이다.
+[입력]
+가장 첫 줄에는 테스트 케이스의 개수 T가 주어지고, 그 아래로 각 테스트 케이스가 주어진다.
+각 테스트 케이스의 첫 번째 줄에 하나의 단어가 주어진다.
+[출력]
+출력의 각 줄은 '#t'로 시작하고, 공백을 한 칸 둔 다음 정답을 출력한다.
+(t는 테스트 케이스의 번호를 의미하며 1부터 시작한다.)
 
 ```python
 T= int(input())
@@ -877,9 +1015,87 @@ for T in range(T):
 ```
 
 
+### 2001.파리 퇴치
 
-###### 2001.파리 퇴치
+```python
+T = int(input())
+for T in range(T):
+    N, M = list(map(int, input().strip().split(' ')))
+    
+    data = list()
+    for _ in range(N):
+        data.append( list(map(int, input().strip().split(' '))) )
+        
+    #0~N-M
+    result = 0
+    for y in range(N-M+1):
+        for x in range(N-M+1):
+            temp = 0
+            for yi in range(M):
+                for xi in range(M):
+                    temp += data[y+yi][x+xi]
+            if temp > result:
+                result = temp
+    print('#{} {}'.format(T+1, result))
+```
 
-###### 2005.파스칼의 삼각형
+### 2005.파스칼의 삼각형
 
-###### 2007.패턴 마디의 길이
+#### list1.append(int값) 으로 리스트 만든후 list2.append(list1) 으로 이중배열 완성
+```python
+T = int(input())
+for T in range(T):
+    N = int(input())
+    
+    data = list()
+    for k in range(N):
+        temp = list()
+        for i in range(k+1):
+            if i == 0 or i == k:
+                temp.append(1)
+            else:
+                temp.append ( data[k-1][i-1]+data[k-1][i] )
+        data.append(temp)
+    print('#{}'.format(T+1))
+    for k in data:
+        for i in k:
+            print(i, end=' ')
+        print('')
+                
+```
+
+### 2007.패턴 마디의 길이
+```python
+T = int(input().strip())
+for T in range(T):
+    words = input().strip()
+    
+    index = list()
+    n = len(index) #6
+    for idx, word in enumerate(words):
+        if word == words[0] : 
+            index.append(idx)
+    length = list()
+    for i in range( len(index )-1):
+        length.append( index[i+1] - index[i] )
+    length.append( 30 - index [len(length)] )
+   # print(index)
+  #  print(length)
+    
+    cases = [n for n in index if 0< n<= 10 ] 
+    #print (cases)
+    result = 0
+    for case in cases:
+        i=0
+        if result != 0:
+            if case % result == 0:
+                break
+        for word in words[0:case]:
+            if word != words[case+i]:
+                break
+            else:
+                i += 1
+                if i == case:
+                    result = case
+    print('#{} {}'.format(T+1,result))
+```
