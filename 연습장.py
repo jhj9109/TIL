@@ -1,10 +1,20 @@
-0 2 / 1 1 / 2 0
+T = 10
+for t in range(T):
 
--1 1/ 0 0 / 1 -1
-
--2 0/-1 -1/ 0 -2
-
-원래
-0 0 / 0 1 / 0 2
-1 0 / 1 1 / 1 2
-2 0 / 2 1 / 2 2
+    N, number_str = list(input().strip().split())
+    number = [int(n) for n in number_str]
+    flag = True
+    while flag:
+        flag = False
+        for idx in range(len(number)-1) :
+            if number[idx] == number[idx+1]:
+                flag = True
+                number.pop(idx)
+                number.pop(idx)
+                break
+    
+    print(f'#{t+1} ',end='')
+    for n in number:
+        print(f'{n}',end='')
+    print('')
+            
