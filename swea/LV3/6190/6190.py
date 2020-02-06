@@ -1,75 +1,57 @@
-'''
-T 입력
-N 갯수
-N개 정수
------데이터---
-data = 리스트형태로 정수 저장
-for i in r
-'''
 import sys
 sys.stdin = open("input.txt")
-
-
-# T = int(input())
-# for tc in range(1, T+1):
-#     N = int(input())
-#     #data = list(map(int, input().split()))
-#     data = list(input().split())
-
-#     max_num = -1
-#     for i in range(N):
-#         for j in range(N):
-#             if i != j:
-#                 flag = True
-#                 temp = str(int(data[i]) * int(data[j]))
-#                 for n in range(len(temp)-1):
-#                     if temp[n] > temp[n+1]:
-#                         flag = False
-#                         break
-#                 if flag:
-#                     if int(temp) > max_num:
-#                         max_num = int(temp)
-#     print(f'#{tc} {max_num}')
-
-
+'''
+swea를 믿지 않으니, 인풋값 NN은 쓰지 않음
+N 정수 갯수
+multis : 주어진 정수 2개를 택해 곱한 값(중복선택X) 내림차순 정렬
+각 multi에 접근해 뒷자리부터 나머지와 몫을 이용해 단조증가여부 검사
+'''
 # T = int(input())
 # for tc in range(1, T+1):
 #     NN = int(input())
 #     data = list(map(int, input().split()))
 #     N = len(data)
 #     multis = sorted([data[x] * data[y] for x in range(N-1) for y in range(x+1,N)], reverse=True)
-#     #print(multis)
 #     for multi in multis:
-#         flag = True
-#         num = multi
+        
 #         i = 1
-#         temp = num % (10 ** i) #N자리 몫 N-1, 나머지 N
-#         num -= temp
-#         while num // (10 ** i) != 0:
+#         previous_digit = multi % (10 ** i)
+
+#         while multi // (10 ** i) != 0:
 #             i += 1
-#             if temp < num % (10 ** (i)):
-#                 flag = False
+#             next_digit = (multi % (10 ** (i))) // (10 ** (i-1))
+#             if previous_digit < (multi % (10 ** (i))) // (10 ** (i-1)):
+                
 #                 break
-#             num -= num % (10 ** (i))
-#         if flag:
+#             else:
+#                 previous_digit = next_digit
+#         else:
 #             print(f'#{tc} {multi}')
+#             break
+#     else: 
+#         print(f'#{tc} -1')
+
+#밑에 아직 수정중
+def myfunc_digit(num, N):
+    return (num % (10 ** (N))) // (10 ** (N-1))
 
 T = int(input())
-for tc in range(1, T+1):
-    n = int(input())
-    numbers = list(map(int, input().split()))
-    products = sorted([numbers[i]*numbers[j] for i in range(n-1) for j in range(i+1, n)], reverse=True)
-    for product in products:
-        current = str(product)
-        previous_digit = int(current[0])
-        for digit in current:
-            if int(digit) < previous_digit:
-                break
+for tc in range(1,T+1):
+    N = int(input())
+    num_list = list(map(int,input().split()))
+    result = -1
+    for idx_1 in range(len(num_list) - 1):
+        for idx_2 in range(idx_1 + 1, len(num_list)):
+            current_num = num_list[idx_1] * num_list[idx_2]
+            n = 1
+            previous_digit = myfunc_digit(current_num, n)
+            while current_num // (10 ** n) != 0:
+                n += 1
+                next_digit = myfunc_digit(current_num, n)
+                if previous_digit < next_digit:
+                    break
+                previous_digit = next_digit
+            
             else:
-                previous_digit = int(digit)
-        else:
-            result = product
-            break
-    else:
-        result = -1
-    print('#{} {}'.format(tc, result))
+                result = current_num
+    print('#{0} {1}'.format(tc, result))

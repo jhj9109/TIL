@@ -1,5 +1,9 @@
 # SW Expert Academy
 
+## 푸는중
+
+2806 N-Queen
+
 ## Level 3
 
 ### [O] 1206. View
