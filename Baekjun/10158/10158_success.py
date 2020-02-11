@@ -1,0 +1,5 @@
+w, h = map(int, input().split())
+x, y = map(int, input().split())
+t = int(input())
+tx, ty = t % (2*w), t % (2*h)
+print( x+tx if x+tx <= w else 2*w-x-tx if x+tx <= 2*w else x+tx-2*w , y+ty if y+ty <= h else 2*h-y-ty if y+ty <= 2*h else y+ty-2*h )
