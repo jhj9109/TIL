@@ -17,16 +17,16 @@ def chess(imposs_index, N, no):
     리턴은 최종적으로 cnt
     '''
     if no == N :
-        return 1
-    cnt = 0
+        cnt[0] += 1
+        return
+    #cnt = 0
     for p in range(N):
         for q in range(3):
             if p in imposs_index[q]:
                 break
         else:
             new_imposs_index = ret_imposs(imposs_index, N, p)
-            cnt += chess(new_imposs_index, N, no+1)
-    return cnt
+            chess(new_imposs_index, N, no+1)
 
 def ret_imposs(imposs_src, N, p):
     '''
@@ -52,8 +52,8 @@ def ret_imposs(imposs_src, N, p):
 T = int(input())
 for tc in range(1, T+1):
     N = int(input())
-
+    cnt = [0]
     init_imposs_index = [ [], [], [] ]
     no = 0
-    result = chess(init_imposs_index, N, no)
-    print(f'#{tc} {result}')
+    chess(init_imposs_index, N, no)
+    print(f'#{tc} {cnt}')

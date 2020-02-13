@@ -12,7 +12,7 @@ def chess(imposs_index, N, no):
     N : 목표 체스말 수 
     -------------------------------출력-----------------------------------
     놓을 수 있는 가능성이 있으면 chess함수를 또 호출한다 >>> for문으로
-    체스가 마무리 된거면 (no == N) 1을 리턴한다
+    체스가 마무리 된거면 (n > N) 1을 리턴한다
     어디에도 놓을수 없으면 0을 리턴한다
     리턴은 최종적으로 cnt
     '''
@@ -55,5 +55,9 @@ for tc in range(1, T+1):
 
     init_imposs_index = [ [], [], [] ]
     no = 0
+   
+    for j in range(N):
+        chess(init_imposs_index, j)
+        ret_imposs(init_imposs_index, )
     result = chess(init_imposs_index, N, no)
     print(f'#{tc} {result}')
