@@ -1,20 +1,21 @@
 import sys
-sys.stdin = open('input.txt')
+input = sys.stdin.readline().strip
+sys.stdin = open('input.txt') #readline은 스트링인풋을 받을때, 줄바꿈 캐릭터를 없애 줘야한다. >>strip
 
 T = int(input())
 
 for tc in range(1, T+1):
-    s = []
     d = input()
+    s = []
     for c in d:
         if c == '(':
-            s.append('(')
+            s.append(c)
         else:
-            if s == [] or s.pop() != '(':
+            if not len(s):
                 print('NO')
                 break
     else:
-        if s == []:
+        if not len(s):
             print('YES')
         else:
             print('NO')

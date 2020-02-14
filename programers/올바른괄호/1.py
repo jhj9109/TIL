@@ -1,27 +1,15 @@
-1 2 3 (2) 3
-주식값 = 2 , stack = empty, 주식 유지 날 = 0+1 
-=> stack 저장 값 = (2, 1)
+def solution(d):
+    answer = True
+    s = []
+    for c in d:
+        if c == '(':
+            s.append(c)
+        else:
+            if s == [] or s.pop() != '(':
+                return False
 
-(조건에 의해 stack pop 하지 않음)
-
-
-1 2 (3) 2 3
-주식값 = 3 , stack = (2,1), 주식 유지 날 = 0+1 
-=> stack 저장 값 = (3,2)(2, 1)
-
-(조건에 의해 stack pop 하지 않음)
-
-
-1 (2) 3 2 3
-주식값 = 2,  stack = (3,1)(2,1), 주식 유지 날 = (1+1)+1 
-=> stack 저장값 = (3,3)
-
-(조건에 의해 stack에 값을 pop 하여 주식 유지 날을 합산 하고 +1 하여 저장함)
-
-
-
-(1) 2 3 2 3
-주식값 = 1,  stack = (3,3), 주식 유지 날 = (3) + 1
-=> stack에 저장 값 (1,4)
-
-조건에 의해 stack에 값을 pop 하여 주식 유지 날을 합산 하고 +1 하여 저장함)
+    if s == []:
+        return True
+    else:
+        return False
+    return True

@@ -1,3 +1,6 @@
+import sys
+input = sys.stdin.readline()
+
 K = int(input())
 
 stack = []
@@ -6,5 +9,6 @@ for _ in range(K):
     if n:
         stack.append(n)
     else:
-        stack.pop()
+        if len(stack) != 0:
+            stack.pop()
 print(sum(stack))
