@@ -9,6 +9,7 @@ def my_remove(data, result):
                 if(data[j].count(i)):
                     data[j].remove(i)
     return data, result
+    
 T = 10
 for tc in range(1, T+1):    
     V, E = map(int, input().strip().split())
