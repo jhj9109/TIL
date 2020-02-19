@@ -26,13 +26,13 @@ def return_start(field):
     for x in range(N):
         for y in range(N):
             if field[x][y] == 2:
-                return (x, y)
+                return x, y
 
 T = int(input())
 for tc in range(1, T+1):
     N = int(input())
     field = [list(int(x) for x in input()) for _ in range(N)]
-    (X, Y) = return_start(field)
+    X, Y = return_start(field)
     
     res = []
     cnt = [0]
