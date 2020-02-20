@@ -1,0 +1,5 @@
+a=str(1)
+b=int('30')
+c=int(5)
+d=bool('50')
+e=int('3.5')
