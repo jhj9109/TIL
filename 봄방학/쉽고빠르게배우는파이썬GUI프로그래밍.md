@@ -73,31 +73,35 @@ win 소속지정 (상위 윈도우, 위젯)
 option 생성 옵션 (크기, 색 등등)
 
 Label 옵션
-옵션명 : 의미 : 기본값 : 속성
-텍스트 관련
-text : 레이블에 표시할 문자열 : - : -
-textvariable : 레이블의 문자열 저장변수 : - : -
-anchro : 할당공간 내에서 표시위치 : center - n, ne, e, se, s, sw, w, nw, center
-justify : 문자열 정렬방식 : center : center, right, left
-wraplenth : 자동 줄내림 설정 너비 : 0 : 상수
-모양 / 색 관련
-width,height : 너비 , 높이 : 0 : 상수
-relief : 테두리 모양 : falt : flat, groove, raised, ridge, solid , sunken
-borderwidth(bd) : 테두리 두께 : 2 : 상수
-borderground(bg) : 배경 색상 : SystemButtonFace : color
-foreground(fg) : 문자열 색상 : SystemButtonText : color
-padx : 테두리와 내용의 가로 여백 (내부채움) : 1 : 상수
-pady : 테두리와 내용의 세로 여백 : 1 : 상수
-상태 관련
-state : 상태 : normal : normal, active(마우스 위에), disabled(먹통)
-activebackground : active상태일때 배경 색상 : SystemButtonFace : color
-activeforeground : active상태일때 문자열 색상 : SystemButtonText : color
-disabledforeground : active상태일때 배경 색상 : SystemDisabledTextFace : color
-포커스 & 하이라이트 관련
-takefocus : 포커스 여부 : False : True
-highlightcolor : 선택되었을때 보더 색상 : SystemWindowFrame : color
-highlightbackground : 선택되지않았을때 보더 색상 : SystemButtonFace : color
-highlightthickness : 선택되었을때 보더 두께 : 0 : color
+
+|                         옵션명                          |                 의미                 |         기본값         |                    속성                     |
+| :-----------------------------------------------------: | :----------------------------------: | :--------------------: | :-----------------------------------------: |
+|                       텍스트 관련                       |                                      |                        |                                             |
+|                          text                           |        레이블에 표시할 문자열        |           -            |                      -                      |
+|                      textvariable                       |       레이블의 문자열 저장변수       |                        |                                             |
+|                         anchor                          |       할당공간 내에서 표시위치       |         center         |     n, ne, e, se, s, sw, w, nw, center      |
+|                         justify                         |           문자열 정렬방식            |         center         |             center, right, left             |
+|                        wraplenth                        |        자동 줄내림 설정 너비         |           0            |                    상수                     |
+|                     모양 / 색 관련                      |                                      |                        |                                             |
+|                      width,height                       |              너비, 높이              |           0            |                    상수                     |
+|                         relief                          |              테두리모양              |          flat          | flat, groove, raised, ridge, solid , sunken |
+|                     borderwidth(bd)                     |             테두리 두께              |           2            |                    상수                     |
+|                    borderground(bg)                     |              배경 색상               |    SystemButtonFace    |                    color                    |
+|                     foreground(fg)                      |             문자열 색상              |    SystemButtonText    |                    color                    |
+|                          padx                           | 테두리와 내용의 가로 여백 (내부채움) |           1            |                    상수                     |
+|                          pady                           |      테두리와 내용의 세로 여백       |           1            |                    상수                     |
+|                        상태 관련                        |                                      |                        |                                             |
+|                          state                          |                 상태                 |                        | normal, active(마우스 위에), disabled(먹통) |
+|                    activebackground                     |       active상태일때 배경 색상       |    SystemButtonFace    |                    color                    |
+|                    activeforeground                     |      active상태일때 문자열 색상      |    SystemButtonText    |                    color                    |
+|                   disabledforeground                    |      disabled상태일때 배경 색상      | SystemDisabledTextFace |                    color                    |
+|                포커스 & 하이라이트 관련                 |                                      |                        |                                             |
+|                        takefocus                        |             포커스 여부              |         False          |                    True                     |
+|                     highlightcolor                      |        선택되었을때 보더 색상        |   SystemWindowFrame    |                    color                    |
+| : 선택되지않았을때 보더 색상 : SystemButtonFace : color |      선택되지않았을때 보더 색상      |    SystemButtonFace    |                    color                    |
+|                   highlightthickness                    |        선택되었을때 보더 두께        |           0            |                    상수                     |
+
+
 
 ```python
 import tkinter
@@ -131,3 +135,164 @@ hello['text'] ='안녕파이썬'
 ```
 레이블.config(text = :" 바꿀 텍스트") #configure 써도 똑같음
 레이블['text'] = '바꿀 텍스트'
+
+# 2일차 widget의 배치 & 꾸미기
+
+> 목표 : tkinter geometry 이해, widget을 창에 최적 배치 & 세부 옵션 구분 지정
+>
+> 콘텐츠 : geometry manager, pack & grid, place, widget배치의 세부 옵션
+
+위젯의 배치
+
+### 1. pack()
+
+side : 해당 구역 할당/배치 : top : top,bottom, left, right
+
+anchor : 할당공간 내 위치 지정 : center : 
+
+fill : 할당공간 내 크기 채우기
+
+|     옵션      |                 의미                 | 기본값 |                 값                 |
+| :-----------: | :----------------------------------: | :----: | :--------------------------------: |
+|     side      |         해당 구역 할당/배치          |  top   |      top, bottom, left, right      |
+|    anchor     |         할당공간 내 위치지정         | center | n, ne, e, se, s, sw, w, nw, center |
+|     fill      |       할당공간 내 크기 채우기        |  none  |          none, x, y, both          |
+|    expand     |      비할당 공간까지 위젯 확장       | False  |               T / F                |
+| ipadx / ipady |   위젯에 대한 x, y 방향 내부 패딩    |   0    |                상수                |
+|  padx / pady  | 위젯에 대한 x,y 방향 외부 패딩(여백) |   0    |                상수                |
+
+```python
+import tkinter
+
+win = tkinter.Tk()
+win.geometry("300x300")
+
+hello = tkinter.Label(win, text = 'Hello World!', relief = 'ridge')
+hello.pack(side = 'left')
+```
+
+윈도우공간 > 할당공간 > 사용공간 & 미사용공간 
+
+### 2. grid()
+
+- grid은 모든 frame dmf 행렬격자구조 테이블로 처리
+- cell은 행과 열의 교차점
+- 열의 너비 -- : 해당 열에서 가장 넓은 셀의 너비
+- 행의 높이 -- : 해당 행에서 가장 높은 셀의 높이
+- 여러 셀을 하나의 영역으로 spnning 할 수 있다
+- 지오메트리에 등록해야 화면에 나타남
+- 위젯은 grid에서 일반적으로 하나의 셀만 점유
+
+옵션
+
+- row, column : 옵션으로 표시될 행과 열을 지정
+- columaspan, rowspan : 옵션 지정 시 여러 셀 병합
+- padx, pady : 위젯의 외부에 빈 공간으로 패딩
+- ipadx, ipady : 위젯 자체의 크기 확장으로 패딩
+- sticky : 여분공간에서 위젯의 배치를 어찌할지 결정 W, E, N, S 등
+
+
+
+```python
+from tkinter import *
+win = Tk()
+ent = Entry(win).grid(row = 0, column = 0, columnspan = 3)
+
+f = "굴림", 10
+btn1 = Button(win, font = f, text = '1-0', width = 4, height = 2)
+btn1.grid(row = 1, column = 0)
+btn2 = Button(win, font = f, text = '1-1', width = 4, height = 2)
+btn2.grid(row = 1, column = 1)
+btn3 = Button(win, font = f, text = '1-2', width = 4, height = 2)
+btn3.grid(row = 1, column = 2)
+```
+
+### place
+
+> 위젯의 x,y 좌표값을 지정하므로 좀더 정밀한 배치 가능
+>
+> 픽셀 단위의 수평, 수직 오프셋값
+
+`widget.place(x = 20, y = 20)`
+
+```python
+from tkinter import *
+from tkinter import ttk
+
+win = Tk()
+win.geometry('330x250')
+
+b1 = ttk.Button(win, text='불러오기')
+b1.place(x = 10, y = 10, width = 100)
+
+b2 = ttk.Button(win, text='처리하기')
+b2.place(x = 115, y = 10, width = 100)
+
+b3 = ttk.Button(win, text='저장하기')
+b3.place(x = 220, y = 10, width = 100)
+
+tx = Text(win)
+tx.place(x = 10, y = 45, width=310)
+
+win.mainloop()
+```
+
+## 창의 위치와 크기 지정
+
+> geometry('geometry string')메서드
+
+`win.geometry('WxH + X + Y')`
+
+W : 넓이(픽셀)
+
+H : 높이
+
+X : 화면좌측 모서리로부터의 X좌표
+
+Y : 화면좌측 모서리로부터의 Y좌표
+
+## 위젯의 3D효과 (relief)지정
+
+sunken : 움푹 파인 것
+
+ridge : 테두리만 튀어나온 것
+
+groove : 테두리 경계
+
+raised : 높이 솟은 것
+
+## font 지정
+
+방법1 : 위젯 생성시 순서에 맞추어 font string 지정
+
+family size weight slant underline overstrike
+
+family : 폰트 이름
+
+size : 사이즈
+
+weight : 두께 (bold, normal)
+
+slant : 기울림 (italic, roman)
+
+underline : 언더라인
+
+overstrike : 오버라인
+
+방법2 : tkinter font 모듈 활용
+
+```python
+from tkinter import *
+import tkinter.font as ft
+win = Tk()
+f = ft.Font(family = "HY헤드라인M",
+          	size = 16,
+           weight = 'bold',
+           slant = 'italic',
+           underline = True)
+lbl = Label(win, text = "안녕 파이썬", font = f)
+lbl.pack()
+
+win.mainloop()
+```
+
