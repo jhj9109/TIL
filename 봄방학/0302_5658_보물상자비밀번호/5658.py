@@ -26,4 +26,5 @@ for tc in range(1, T+1):
             temp += t(d[i+j])*(16**(N//4 -1 - j))
         num_set.add(temp)
     num_lst = sorted(list(num_set), reverse = True)
+    print(num_lst)
     print(f'#{tc} {num_lst[K-1]}')
