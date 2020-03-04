@@ -15,11 +15,11 @@ sys.stdin = open('input1258.txt')
 def my_search(data, x, y, n):
     size = []
     nx = x+1
-    while nx <= n-1 and field[nx][y] != 0:
+    while nx <= n-1 and data[nx][y] != 0:
         nx += 1
     size.append(nx-x)
     ny = y+1
-    while ny <= n-1 and field[x][ny] != 0:
+    while ny <= n-1 and data[x][ny] != 0:
         ny += 1
     size.append(ny-y)
     size.append(size[0]*size[1])
@@ -39,7 +39,7 @@ for tc in range(1, T+1):
                 if not result:
                     result.append(temp)
                 else:
-                    s = []
+                    s = [] # result에 푸쉬할때 정렬하기
                     while result and result[-1][2] >= temp[2] :
                         if result[-1][2] == temp[2] and result[-1][0] < temp[0]:
                             break
