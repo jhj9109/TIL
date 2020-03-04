@@ -3,19 +3,6 @@ import sys
 sys.stdin = open('input17281.txt')
 #예제출력 1, 4, 43, 46, 216, 89
 
-'''10:51
-N이닝, 3아웃, 공수교대
-경기시작전 타순, 도중 변경 불가
-주자 O, 1루타, 2루타, 3루타, 홈런, 아웃
-----------------타순 정하기------------------------
-4번 타순 :No.1 >>> 0~8번 타순 : 3번타순No.0
-------------------입력-----------------------------
-N : 2~50
-N 줄 : 각 이닝 별 별과
-안타1 2루타2 3루타3 홈런4 아웃0
-------------------데이터---------------------------
-lineup = [0, 1, 2, 3>>>No.1, 4, 5, 6, 7, 8] 0~8
-'''
 
 def permute(N, arr):
     arr.insert(3, 0)
@@ -32,6 +19,8 @@ def permute(N, arr):
                 arr[c[i]], arr[i] = arr[i], arr[c[i]]
             arr.insert(3, 0)
             score = go(N, arr, score)
+            if score == GG[0]:
+                return score
             arr.pop(3)
             c[i] += 1
             i = 0
@@ -47,9 +36,10 @@ def go(N, lineup, score):#이미 라인업을 만든 후, N개의 이닝별 데�
     res = 0
     ining = 0 #0이닝부터 N-1이닝까지
     j = []
+    #1,2,3 = 1, 2, 3 / 1,2 > 4 , 2,3 > 5 , 1,3 > 6, 1,2,3 > 7
     out = 0
     while ining < N:
-        if (N-ining)*24 + res < score: #백트래킹
+        if GG[ining] + res < score: #백트래킹
             return score
         while out < 3:
             #현재 타순 <now> 은 이미 전에 결정되서 넘어온다고 치면
@@ -86,9 +76,17 @@ def go(N, lineup, score):#이미 라인업을 만든 후, N개의 이닝별 데�
     score = res if res > score else score
     return score
 
-T = 6
+T = 1
 for tc in range(1, T+1):
     N = int(input())
     d = [list(map(int, input().split())) for _ in range (N)]
-    # print(d)
+    GG = []
+    cnt = 0
+    for rows in d:
+        temp = 0
+        for r in rows:
+            temp += 1 if not r else 0
+        cnt += 6 if temp >= 3 else 14 if temp == 2 else 24 
+        GG.append(cnt)
+    GG = GG[::-1]
     print( permute(N, list(range(1,9)) ) )
