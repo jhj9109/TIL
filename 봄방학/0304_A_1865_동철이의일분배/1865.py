@@ -35,7 +35,7 @@ for tc in range(1, T+1):
     N = int(input())
     field = list( [float(n)/100 for n in input().split() ] for _ in range(N))
     #초기값
-    percent = [n for n in field[0]]
+    percent = [p for p in field[0]]
     #s = [(0, i, percent[i]) for i in range(N) ]
     s = [(0, i) for i in range(N)]
     print('#{0} {1:00.6f}'.format(tc, dfs(s, percent)*100 ))

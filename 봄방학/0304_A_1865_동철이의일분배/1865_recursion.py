@@ -2,7 +2,7 @@ import sys
 sys.stdin = open('input1865.txt')
 '''
 2:09 ~ 3:07
-N : 1~16 >>> 경우의수 1,307,674,368,000 : 1.3조
+N : 1~16 >>> 경우의수 21조
 r : 직원 N명
 c : 일 N개
 성공확률 Pr,c
@@ -10,13 +10,13 @@ c : 일 N개
 '''
 def dfs_rec(r, now):
     global res
-    if r == N-1:
+    if r == N:
         res = now
     else:
         for w in range(N):
-            if not v[w] and now*field[r+1][w] > res: #백트래킹
+            if not v[w] and now*field[r][w] > res: #백트래킹
                 v[w] = True
-                dfs_rec(r+1, now*field[r+1][w])
+                dfs_rec(r+1, now*field[r][w])
                 v[w] = False
 
 T = int(input())
@@ -25,5 +25,5 @@ for tc in range(1, T+1):
     field = list( [int(n)/100 for n in input().split() ] for _ in range(N))
     v = [False]*(N)
     res = 0
-    dfs_rec(-1, 100)
+    dfs_rec(0, 100)
     print('#{0} {1:00.6f}'.format(tc, res ))
