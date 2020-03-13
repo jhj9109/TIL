@@ -1,0 +1,89 @@
+body{
+    margin: 0;
+}
+
+.nav_logo{
+    /*링크 데코레이션*/
+    text-decoration: none;
+    color: black;
+}
+nav {
+    /*nav라는 블럭요소*/
+    padding: 1rem;
+}
+.nav_items{
+    /*nav요소중 우측 정렬된 ul>li*/
+    float:right;
+    margin: 0;
+    padding-left: 0;/*블릭 공간 제거*/
+}
+
+.nav_item {
+    /*li 형식인 nav*/
+    /*float:right; stack처럼 우측부터 쌓이기 떄문에, 순서가 역순*/
+    list-style-type: none; /*사라진 블릭 공간은 여전히 자리 차지*/
+    margin: 0;
+    
+    /*한줄로 정렬되도록 inline 설정*/
+    display:inline;
+    cursor: pointer;
+}
+
+.cover{
+    background-image: url("./images/bicycles.jpg");
+    height : 500px;
+
+    /*
+    기본 : 작아질때 고정, 커질때 repeat
+    cover : 작아질때 고정, 커질때 확장
+    no-repeat : 작아질때 고정, 커질때 여백생김
+    */
+    background-size: cover;
+    /*background-repeat: no-repeat;*/
+
+    /*방법1
+    패딩 설정하기
+    padding-top: 230px;
+    text-align: center;
+    */
+    /*방법2
+    한줄 텍스트 수직 가운데 정렬
+    line-height: 500px;
+    text-align: center;
+    */
+    /*방법3
+    테이블 만들기
+    display : table;
+    width : 100%;
+    text-align: center;
+    */
+    /*방법4
+    플랙스
+    컨테이너 : 아이템(자식)
+    axis:main,cross*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover_title{
+    margin:0;
+    /*방법3
+    테이블만들기
+    display: table-cell;
+    vertical-align: middle;
+    */
+}
+.contents{
+    /*inline요소 정렬*/
+    text-align: center;
+}
+
+.contents > img{
+    /*img도 inline, 얘는 크기 변화 X*/
+    width: 750px;
+}
+/* 
+border : 상속X
+color : 상속됨
+*/
