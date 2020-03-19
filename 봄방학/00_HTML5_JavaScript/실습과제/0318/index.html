@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입 폼</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>회원 가입</h1>
+  <form action="">
+    <!-- 아래에 자유롭게 꾸며주세요! 어떠한 제약사항도 없습니다 :) -->
+    <!--사용자 이름-->
+    <div class="join_row">
+      <label for="username">사용자 이름:</label>
+      <span class="ps_box int_id">
+        <input type="text" id="username" name="username" class="int" title="ID" maxlength="20" autocomplete="username">
+      </span>
+      <span class="id_ment">이름을 입력해주세요</span>
+    </div>
+
+    <!--비밀번호-->
+    <div class="join_row">
+      <h3 class="join_title">
+        <label for="paswd1">비밀번호:</label>
+      </h3>
+      <span class="ps_box int_id">
+        <input type="password" id="pswd1" name="pswd1" class="int" title="비밀번호 입력" maxlength="20" required autofocus >
+      </span>
+      <span class="id_ment">비밀번호는 8글자 이상으로 해주세요</span>
+    </div>
+
+    <!--비밀번호 확인-->
+    <div class="join_row">
+      <h3 class="join_title">
+        <label for="paswd2">비밀번호 확인:</label>
+      </h3>
+      <span class="ps_box int_id">
+        <input type="password" id="pswd2" name="pswd2" class="int" title="비밀번호 재확인 입력" maxlength="20">
+      </span>
+      <span class="id_ment">동일하게 입력 해주세요</span>
+    </div>
+    <!--제출 버튼-->
+    <div class="btn_area">
+      <button type="button" id="btnJoin" class="btn_type btn_primary">
+      <span>제출</span>
+      </button>
+    </div>
+  </form>
+</body>
+</html>

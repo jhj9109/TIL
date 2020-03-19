@@ -1,0 +1,20 @@
+.containerbox {
+    border: 2px solid;
+    margin: 0 auto;
+    text-align: center;
+}
+menu ul{position:relative;margin:0px; padding:0px;}
+ul li{display:inline}
+
+.ul_r {
+    float : right;
+    margin : 10px 30px 10px 0px;
+}
+.ul_l {
+    float : left;
+    margin-left: -10px;
+}
+
+.rr {
+    margin-left : 20px;
+}

@@ -1,0 +1,62 @@
+/* pdf에 정의된 초기화는 미리 작성 해두었습니다. */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+h4 {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: Arial;
+}
+
+p {
+	font-family: Arial;
+}
+
+/* 아래에 카드 레이아웃을 직접 만들어보세요. */
+body{
+	border-style: solid;
+	border-width: 2px;
+	border-color: gray;
+	width: 700px;
+	height: 630px;
+	padding: 18px;
+}
+.img {
+	background-image: url(img.jpg);
+	height: 400px;
+
+	position: relative;
+}
+figcaption{
+	color: white;
+	position: absolute;
+	padding: 0 260px;
+	bottom: 0;
+	background-color: gray;
+}
+section{
+	margin-top: 30px;
+}
+.title_title{
+	float: left;
+}
+.title_date{
+	float: right;
+}
+.title::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.container p{
+	background-color: lightblue;
+}
+
+.like{
+	margin-top: 30px;
+	background-color: gray;
+}
