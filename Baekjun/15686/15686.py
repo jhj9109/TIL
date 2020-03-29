@@ -1,4 +1,4 @@
-'''6:25~7:15 예제4 실패
+'''
 NxN필드
 0 빈칸
 1 집
@@ -10,57 +10,47 @@ NxN필드
 M개 남기고 폐업, 치킨 거리 최소
 '''
 
+# import sys
+# sys.stdin = open("input15686.txt")
 import sys
-sys.stdin = open("input15686.txt")
+input = sys.stdin.readline
 
 def check():
-    cnt = 0
-    for r in range(N):
-        for c in range(N):
-            cnt += 1 if f[r][c]==2 else 0
-    return cnt
-
-def sel(n):
-    global res
-    if n == M:
-        temp = cal()
-        res = temp if temp < res else res
-    else:
-        for r in range(N):
-            for c in range(N):
-                if f[r][c] == 2:
-                    f[r][c] = 0
-                    sel(n-1)
-                    f[r][c] = 2
-def cal():
-    cnt = 0
     for r in range(N):
         for c in range(N):
             if f[r][c] == 1:
-                cnt += cal2(r, c)
-                if cnt >= res:
-                    return cnt
-    return cnt
+                home.append((r, c))
+            elif f[r][c] == 2:
+                store.append((r, c))
 
-def cal2(ori_r, ori_c):
-    s = [(ori_r, ori_c)]
-    v = []
-    while s:
-        r, c = s.pop(0)
-        for dr, dc in [(0,1), (0,-1), (1, 0), (-1, 0)]:
-            nr, nc = r+dr, c+dc
-            if 0<=nr<N and 0<=nc<N:
-                if f[nr][nc] == 2:
-                    return abs(ori_r-nr) + abs(ori_c-nc)
-                else:
-                    if (nr, nc) not in v:
-                        s.append((nr,nc))
-                        v.append((nr,nc))
+def sel(n, lst):
+    if lst and len(lst) == M:
+        cal(lst)
+    elif n < len(store):
+        sel(n+1, lst+[store[n]])
+        sel(n+1, lst)
 
-T = 4
+def cal(chicken):
+    global res
+    cnt = 0
+    for h in home:
+        temp = 2*N
+        for c in chicken:
+            temp2 = abs(h[0]-c[0])+abs(h[1]-c[1])
+            temp = temp2 if temp2 < temp else temp
+        cnt += temp
+        if cnt >= res:
+            return
+    res = cnt
+    return
+
+T = 1
 for tc in range(1, T+1):    
     N, M = map(int, input().split())
     f = [list(map(int, input().split())) for _ in range(N)]
-    res = (2*N)*(2*N) #최대거리*집
-    sel( check() ) #치킨집수
+    home = []
+    store = []
+    check()
+    res = (2*N)*(2*N)
+    sel(0, [])
     print(res)
