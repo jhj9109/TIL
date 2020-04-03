@@ -12,22 +12,22 @@ sys.stdin = open('input1697.txt')
 def go(N, K):
     nk = abs(N-K)
     v = [0]*(100001)
-    s = [(N,0)]
+    q = [N]
     v[N] = 1
-    while s:
-        now, cnt = s.pop(0)
+    while q:
+        now = q.pop(0)
         if now == K:
-            return cnt
+            return v[now]-1
         else:
             if now <= 99999 and v[now+1] == 0:
-                s.append((now+1, cnt+1))
-                v[now+1] = 1
+                q.append(now+1)
+                v[now+1] = v[now] + 1
             if now >= 1 and v[now-1] == 0:
-                s.append((now-1, cnt+1))
-                v[now-1] = 1
+                q.append(now-1)
+                v[now-1] = v[now] + 1
             if now <= 50000 and v[now*2] == 0:
-                s.append((now*2, cnt+1))
-                v[now*2] = 1
+                q.append(now*2)
+                v[now*2] = v[now] + 1
 
 N, K = map(int, input().split())
 print(go(N, K))
