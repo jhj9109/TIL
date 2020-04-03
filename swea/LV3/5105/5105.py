@@ -12,14 +12,13 @@ def go(start):
     v[start[0]][start[1]] = 1
     while q:
         x, y = q.pop(0)
-        if field[x][y] == '3':
-            return v[x][y]-2
-        else:
-            for k in range(4):
-                nx, ny = x+dx[k], y+dy[k]
-                if 0<=nx<N and 0<=ny<N and field[nx][ny] != '1' and not v[nx][ny]:
-                    q.append((nx, ny))
-                    v[nx][ny] = v[x][y] + 1
+        for k in range(4):
+            nx, ny = x+dx[k], y+dy[k]
+            if 0<=nx<N and 0<=ny<N and field[nx][ny] != '1' and not v[nx][ny]:
+                if field[nx][ny] == '3': # 단축코드
+                    return v[x][y]-1
+                q.append((nx, ny))
+                v[nx][ny] = v[x][y] + 1
     return 0
 
 def ret_start():
