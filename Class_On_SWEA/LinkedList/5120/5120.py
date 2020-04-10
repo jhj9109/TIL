@@ -43,46 +43,6 @@ class LinkedList:
             self.head = item
         self.size += 1
 
-    def popright(self):
-        ret = self.tail.value
-        if self.size == 1:
-            self.tail = self.head = None
-        else:
-            self.tail = self.tail.pre
-            self.tail.next = None
-        self.size -= 1
-        return ret
-
-    def popleft(self):
-        ret = self.head.value
-        if self.size == 1:
-            self.tail = self.head = None
-        else:
-            self.head = self.head.next
-            self.head.pre = None
-        self.size -= 1    
-        return ret
-
-    def pop(self, idx=None):
-        if idx == None or idx == self.size-1:
-            self.popright()
-        elif idx == 0:
-            self.popleft()
-        else:
-            if idx < self.size//2:
-                current = self.head
-                for _ in range(idx):
-                    current = current.next
-            else:
-                current = self.tail
-                for _ in range((self.size-1)-idx):
-                    current = current.pre
-
-            current.pre.next = current.next
-            current.next.pre = current.pre
-            self.size -= 1
-            return current.value
-
     def pick(self, idx):
         if idx < self.size//2:
             current = self.head
@@ -94,19 +54,6 @@ class LinkedList:
             for _ in range((self.size-1)-idx):
                 current = current.pre
             return current.value
-
-    def change(self, idx, value):
-        if idx < self.size//2:
-            current = self.head
-            for _ in range(idx):
-                current = current.next
-            current.value = value
-        else:
-            current = self.tail
-            for _ in range((self.size-1)-idx):
-                current = current.pre
-            current.value = value
-            # print(f'c:{current.value}, p:{self.pick(idx)}')
 
     def insert(self, idx, value):
         if idx == 0:
@@ -129,16 +76,31 @@ class LinkedList:
                 current.pre.next, current.pre = item, item
             self.size += 1
 
-    def show(self):
-        current = self.head
-        if not current:
-            print(None)
-        else:
-            print(f'size:<{l.size}>, {current.value}', end=' ')
-            while current.next:
+    def print(self, start, end):
+        if start < self.size//2:
+            current = self.head
+            for _ in range(start):
                 current = current.next
-                print(current.value, end=' ')
-        print('')
+        else:
+            current = self.tail
+            for _ in range((self.size-1)-start):
+                current = current.pre
+        # start: current
+        ret_lst = [current.value]
+        if start <= end:
+            for _ in range(end-start):
+                current = current.next
+                if current is None:
+                    break
+                ret_lst.append(current.value)
+        else:
+            for _ in range(start-end):
+                current = current.pre
+                if current is None:
+                    break
+                ret_lst.append(current.value)
+        return ret_lst
+                
 
 T = int(input())
 for tc in range(1, T+1):
@@ -147,19 +109,18 @@ for tc in range(1, T+1):
     for v in list(map(int, input().split())):
         l.push(v)
     i = 0
-    temp2 = l.pick(i)
+    # 시작 숫자
+    start_num = l.pick(i)
     for _ in range(K):
-        temp = l.pick(i)
-        if i+M > l.size:
-            i = i+M-l.size
-        else:
-            i = i+M         
+        # 시작칸 i에서 M번째칸, 앞으로 넘어가는 로직 포함
+        i = i+M-l.size if i+M > l.size else i+M
+        # 밀려나는 칸이 없으면, 시작숫자와 더함
         if i == l.size:
-            l.push(l.pick(l.size)+temp2)
+            l.insert(i, l.pick(l.size-1) + start_num)
         else:
             l.insert(i, l.pick(i-1) + l.pick(i))
-    n = l.size if l.size < 10 else 10
-    print(f'#{tc}', end='')
-    for i in range(1, n+1):
-        print('', l.pick(l.size-i), end='')
+    # 출력
+    lst = l.print(l.size-1, l.size-10)
+    print(f'#{tc} ', end='')
+    print(*lst, end=' ')
     print('')
