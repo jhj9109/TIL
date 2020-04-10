@@ -25,113 +25,61 @@ class LinkedList:
             self.tail = item
         self.size += 1
 
-    def pushleft(self, value):
-        item = Node(value)
-        if self.size == 0:
-            self.head = self.tail = item
-            # item.next, item.pre = None, None
-        else:
-            item.next = self.head
-            self.head.pre = item
-            self.head = item
-        self.size += 1
-
-    def popright(self):
-        ret = self.tail.value
-        if self.size == 1:
-            self.tail = self.head = None
-        else:
-            self.tail = self.tail.pre
-            self.tail.next = None
-        self.size -= 1
-        return ret
-
-    def popleft(self):
-        ret = self.head.value
-        if self.size == 1:
-            self.tail = self.head = None
-        else:
-            self.head = self.head.next
-            self.head.pre = None
-        self.size -= 1    
-        return ret
-
-    def pop(self, idx=None):
-        if idx == None or idx == self.size-1:
-            self.popright()
-        elif idx == 0:
-            self.popleft()
-        else:
-            if idx < self.size//2:
-                current = self.head
-                for _ in range(idx):
-                    current = current.next
-            else:
-                current = self.tail
-                for _ in range((self.size-1)-idx):
-                    current = current.pre
-
-            current.pre.next = current.next
-            current.next.pre = current.pre
-            self.size -= 1
-            return current.value
-
-    def pick(self, idx):
-        if idx < self.size//2:
-            current = self.head
-            for _ in range(idx):
-                current = current.next
-            return current.value
-        else:
-            current = self.tail
-            for _ in range((self.size-1)-idx):
-                current = current.pre
-            return current.value
-
-    def change(self, idx, value):
-        if idx < self.size//2:
-            current = self.head
-            for _ in range(idx):
-                current = current.next
-            current.value = value
-        else:
-            current = self.tail
-            for _ in range((self.size-1)-idx):
-                current = current.pre
-            current.value = value
-            # print(f'c:{current.value}, p:{self.pick(idx)}')
-
-    def insert(self, idx, value):
-        if idx == 0:
-            self.pushleft(value)
-        elif idx == self.size:
-            self.push(value)
-        else:
-            item = Node(value) # 1에 넣기 (idx:0~9, size = 10 >>> 9) : 7, 8, item, <9>
-            if idx < self.size//2:
-                current = self.head
-                for _ in range(idx):
-                    current = current.next
-                item.pre, item.next = current.pre, current
-                current.pre.next, current.pre = item, item
-            else:
-                current = self.tail
-                for _ in range(self.size-(idx+1)):
-                    current = current.pre
-                item.pre, item.next = current.pre, current
-                current.pre.next, current.pre = item, item
-            self.size += 1
-
-    def show(self):
+    def insert5110(self, thead, ttail, tsize):
+        # insert 포인트 찾는 부분
         current = self.head
-        if not current:
-            print(None)
+        i = 0
+        while current is not None:
+            if current.value > thead.value:
+                break
+            i += 1
+            current = current.next
+        # i : insert 타겟 포인트 
+
+        if i == 0:
+            # [ ] , <1> , 2 , 3
+            if self.size == 0:
+                self.head, self.tail = thead, ttail
+                # thead.pre, ttail.next = None, None
+            else:
+                self.head.pre = ttail
+                ttail.next = self.head
+                self.head = thead
+        elif i == self.size:
+            # 1, 2, 3, [ ]
+            self.tail.next = thead
+            thead.pre = self.tail
+            self.tail = ttail
         else:
-            print('size:',l.size, current.value, end=' ')
-            while current.next:
+            # 1, [ ], <2>
+            thead.pre, ttail.next = current.pre, current
+            current.pre.next, current.pre = thead, ttail
+        self.size += tsize
+
+    def print(self, start, end):
+        if start < self.size//2:
+            current = self.head
+            for _ in range(start):
                 current = current.next
-                print(current.value, end=' ')
-        print('')
+        else:
+            current = self.tail
+            for _ in range((self.size-1)-start):
+                current = current.pre
+        # start: current
+        ret_lst = [current.value]
+        if start <= end:
+            for _ in range(end-start):
+                current = current.next
+                if current is None:
+                    break
+                ret_lst.append(current.value)
+        else:
+            for _ in range(start-end):
+                current = current.pre
+                if current is None:
+                    break
+                ret_lst.append(current.value)
+        return ret_lst
 
 def go(c):
     if c[0] == 'D':
@@ -147,19 +95,18 @@ T = int(input())
 for tc in range(1, T+1):
     N, M = map(int, input().split())
     l = LinkedList()
+
+    # 베이스 링크드리스트 생성
     for n in map(int, input().split()):
         l.push(n)
+
+    # insert 부분
     for _ in range(M-1):
-        temp = list(map(int, input().split()))
-        for i in range(l.size):
-            if l.pick(i) > temp[0]:
-                start = i
-                break
-        else:
-            start = i + 1
-        for i in range(len(temp)):
-            l.insert(start+i, temp[i])
-    print(f'#{tc}', end='')
-    for i in range(l.size-1, l.size-11, -1):
-        print('',l.pick(i), end='')
-    print('')
+        temp = LinkedList()
+        for v in list(map(int, input().split())):
+            temp.push(v)
+        l.insert5110( temp.head, temp.tail, temp.size )
+
+    # 출력부분
+    print(f'#{tc}', end=' ')
+    print(*l.print(l.size-1, l.size-10))
