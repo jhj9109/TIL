@@ -8,8 +8,6 @@ def go(node):
         now = s.pop()
         # 0
         if now*2 > N:
-            if f[now] == None:
-                return -1
             cnt += f[now]
         # 1
         elif now*2 == N:
