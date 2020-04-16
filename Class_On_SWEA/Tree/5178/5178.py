@@ -1,28 +1,19 @@
 import sys
 sys.stdin = open('input5178.txt')
 
-def go(node):
-    s = [node]
-    cnt = 0
-    while s:
-        now = s.pop()
-        # 0
-        if now*2 > N:
-            cnt += f[now]
-        # 1
-        elif now*2 == N:
-            s.append(now*2)
-        # 2
-        elif now*2 <= N-1:
-            s.extend([now*2,now*2+1])
-    return cnt
+def go(n):
+    if n*2 > N:
+        return f[n]
+    elif n*2 == N:
+        return go(n*2)
+    elif n*2 <= N-1:
+        return go(n*2) + go(n*2+1)
 
 T = int(input())
 for tc in range(1, T+1):
-    # 노드N개, leaf 노드 M개, 출력 노드번호 L
     N, M, L = map(int, input().split())
 
-    f = [None]*(N+1)
+    f = [0]*(N+1)
     for _ in range(M):
         m, num = map(int, input().split())
         f[m] = num
