@@ -170,12 +170,13 @@
    ```python
    # orm
    모델명.objects.get(칼럼명=값).delete()
+   ```
 ```
    
       ```sql
    -- sql
    DELETE FROM 테이블명 WHERE 레코드조건;
-      ```
+```
 
 ### 조건에 따른 쿼리문
 
@@ -274,15 +275,15 @@
    ```python
    # orm
    모델명.objects.filter(조건1).filter(조건2).value(칼럼명)
-```
+   ```
    
-      ```sql
+   ```sql
    -- sql
    SELECT 칼럼명 FROM 테이블명
    WHERE 조건1 and 조건2
-      ```
-
-
+   ```
+   
+   
 
 ### 정렬 및 LIMIT, OFFSET
 
@@ -321,14 +322,16 @@
       ```python
    # orm
    모델명.objects.order_by('-칼럼명1', '-칼럼명2')[4]
-```
+   ```
    
-      ```sql
+   ```sql
    -- sql
    SELECT * FROM 테이블명
    ORDER BY 칼럼명1 DESC, 칼럼명2 DESC
    LIMIT 1 OFFSET 4;
-      ```
+   ```
+   
+   
 
 
 
@@ -400,7 +403,6 @@
    ```python
    # orm
    모델.objects.values('칼럼명')
-# QuerySet
    from django.db.models import Count
    모델.objects.values('칼럼명').annotate(Count('칼럼명'))
    ```
@@ -410,4 +412,6 @@
    SELECT 칼럼명, COUNT(칼럼명) FROM 테이블명
    Group by 칼럼명;
    ```
+   
+   
 
