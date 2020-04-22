@@ -332,3 +332,69 @@ def comments_create(request, pk):
 {% endfor %}
 ```
 
+# 0422 수업
+
+```python
+django-admin startproject 프로젝트이름
+ALLOWED_HOSTS = ['*']
+TZ, LCC 변경
+python manage.py startapp 앱이름
+INSTALLED_APPS 앱등록
+앱의 urls.py 생성 (메인 urls.py와 연결)
+# 모델 정의
+class 모델명(models.Model):
+    변수 = models.XxxField(...)
+    변수 = ForiegnKey(...) #변수_id
+# 모델폼 정의 : 1. 모델의 정의된 필드 사용 2. valid 검증 > HTML 반환
+class 모델명Form(forms.ModelForm):
+    class Meta:
+        model = 모델명
+        field = ['항목']
+# 코드 작성 흐름 U V T
+# U
+path('경로', views.이름, name='url이름')
+# V 함수 (인자 -> 반환)
+def 이름 (request, pk): #http request, variable
+    Model > Query Method
+    Template > context
+    # HTTP response obj
+    return render (request, 'html', context)
+	return redirect ('앱이름:url이름')
+# T : DTL을 통해 HTML 작성
+# 인자 : context, (context-processors >)request, request.user
+{% extends 'base.html' %} # 탐색순서 1.DIR 2.APP_DIRS (Installed_Apps)
+
+# Static : App별 static
+{% load static %}
+# staticfiles_dir..
+```
+
+django 기본
+
+- 클래스 / 상속
+- Name(import, 변수)
+
+- 함수와 클래스
+  - 함수 : 로직 재사용
+  - 클래스 : 패턴 { 동작(메서드), 상태(변수) } 
+    - OOP 객체지향프로그래밍 == S + V
+
+# AUTH
+
+user 모델 가져와 사용한다.
+
+회원가입 User UserCreationForm	ModelForm
+
+로그인 	X	  { AuthenticationForm	Form } >  request가 중요 > 첫번째 인자
+
+# ERD
+
+> Entity - Relationship Diagram
+
+관계차수 / 카디널리티 (Database Cardinality 논리적 관계)
+
+- 1:1 : (직선)
+- 1:N  : (까마귀발) 
+- Madatory (직선) : 1부터 시작 가능
+- Optional (원) : 0부터 시작 가능
+- M:N 
