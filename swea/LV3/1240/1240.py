@@ -1,38 +1,27 @@
-hint = [ '0001101', '0011001', '0010011', '0111101', '0100011',\
-    '0110001', '0101111', '0111011', '0110111', '0001011'
-]
-T = int(input())
-for T in range(T):
-    N, M = map(int, input().split())
-    data = [input() for _ in range(N)]
-    #############print(data)
-    flag = False
-    for x in range(N):
-        for y in range(M): #-1==79, : -y + M - 56
-            if data[x][-y] == '1':
-                ######print(x,-y)
-                source =data[x][-y+M-55:-y+M+1] #-55~ 0
-                ###############print(source)
-                flag = True
-            if flag:
-                break
-        if flag:
-            break
-    sums = 0
-    numbers = 0
-    #########print(source)
-    for i in range(8):
-        temp = hint.index(source[0+7*i:7+7*i])
-        ###########print(temp)
-        numbers += temp
-        if (i+1) % 2:#짝수
-            sums += temp * 3
-            #########print(f'{sums} += {temp} * 3')
-        else:
-            sums += temp
-            #######print(f'{sums} += {temp}')
-    #########print(numbers, sums)
-    if (sums % 10) == 0:
-        print(f'#{T+1} {numbers}')
+def go():
+    for i in range(N):
+        for j in range(M-1, 54, -1):
+            if d[i][j] == '1':
+                return go2(i, j-55)
+
+def go2(i, j):
+    lst = []
+    for n in range(8):
+        lst.append(k[ d[i][j+(n*7):j+(n*7)+7] ])
+    if ( (lst[0]+lst[2]+lst[4]+lst[6])*3 + lst[1]+lst[3]+lst[5]+lst[7] )%10:
+        return 0
     else:
-        print(f'#{T+1} 0')
+        return sum(lst)
+
+k = {
+    '0001101':0,    '0011001':1,    '0010011':2,    '0111101':3,
+    '0100011':4,    '0110001':5,    '0101111':6,    '0111011':7,
+    '0110111':8,    '0001011':9,
+}
+
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    d = [ input() for _ in range(N) ]
+    flag = False
+    print(f'#{tc} {go()}')
