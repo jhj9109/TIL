@@ -1,24 +1,20 @@
-def backtrack(selected, k, N):
-    #arr 각 노드의 선택여부 판단하는 배열,
-    #k 깊이, N 목표 갯수
-    candidates = [0] * 2 # 선택지 사용/사용X
-    
+def go(k, cnt):
+
+    if cnt > 10:
+        return
     if k == N:
-        for i in range(N):
-            if selected[i]:
-                print(i, end = " ")
-        print()
+        if cnt == 10:    
+            for i in range(N):
+                if v[i]:
+                    print(i+1, end = " ")
+            print()
         return
     else:
-        n_candidate = make_candidate(candidates)
-        for i in range(n_candidate):
-            selected[k] = candidates[i]
-            backtrack(selected, k+1, N)
-
-def make_candidate(candidates):
-    for i in range(len(candidates)):
-        candidates[i] = i
-    return len(candidates)
+        v[k] = 1
+        go(k+1, cnt+(k+1))
+        v[k] = 0
+        go(k+1, cnt)
  
-N = int(input())
-backtrack([0]*N, 0, N) # 3개 원소 powerset
+N = 10
+v = [0]*N
+go(0, 0) # 3개 원소 powerset
