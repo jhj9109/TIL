@@ -27,3 +27,6 @@ ipython_config.py
 .history
 
 # End of https://www.gitignore.io/api/jupyternotebooks,visualstudiocode
+
+# For my vscode local setting
+settings.json
