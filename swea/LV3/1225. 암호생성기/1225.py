@@ -27,7 +27,7 @@ while flag:
 출력
 '''
 import sys
-sys.stdin = open("input.txt")
+sys.stdin = open("input1225.txt")
 T = 10
 for _ in range(T):
     N = int(input())
