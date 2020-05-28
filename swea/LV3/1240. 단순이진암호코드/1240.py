@@ -55,7 +55,7 @@ for T in range(T):
     print(f'{T+1} {result}')
 '''
 import sys
-sys.stdin = open("input.txt")
+sys.stdin = open("input1240.txt")
 hint = [ '0001101', '0011001', '0010011', '0111101', '0100011',\
     '0110001', '0101111', '0111011', '0110111', '0001011'
 ]
