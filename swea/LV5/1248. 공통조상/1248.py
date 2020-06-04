@@ -6,32 +6,27 @@ sys.stdin = open('input1248.txt')
 
 def go(a, b):
     both_parent = (findP(a, b))
-    childs = findC(both_parent)
-    return (both_parent, childs)
+    preorder(both_parent)
+    return both_parent
 
 def findP(a, b):
     a_parents = []
     temp = a
-    while data[temp][2]:
-        a_parents.append(data[temp][2])
-        temp = data[temp][2]
-    temp = b
-    while data[temp][2] not in a_parents:
-        temp = data[temp][2]
-    return data[temp][2] #공통 조상
+    p = data[a][2]
+    while p:
+        a_parents.append(p)
+        p = data[p][2]
+    p = data[b][2]
+    while p not in a_parents:
+        p = data[p][2]
+    return p #공통 조상
 
-def findC(a):
-    s = [a]
-    cnt = 0
-    while s:
-        now = s.pop()
-        cnt += 1
-        if data[now][0]:
-            s.append(data[now][0])
-        if data[now][1]:
-            s.append(data[now][1])
-    return cnt
-
+def preorder(node):
+    global cnt2
+    if node != 0:
+        cnt2 += 1
+        preorder(data[node][0])
+        preorder(data[node][1])
 
 T = int(input())
 for tc in range(1, T+1):
@@ -48,6 +43,7 @@ for tc in range(1, T+1):
         # 자식에게 부모 등록
         data[t[i+1]][2] = t[i]
 
+    cnt2 = 0
     res = go(target1, target2)
-    print(f'#{tc} {res[0]} {res[1]}')
+    print(f'#{tc} {res} {cnt2}')
 print(time.time() - start_time, 'seconds')
