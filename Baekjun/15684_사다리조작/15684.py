@@ -21,24 +21,26 @@ def sim_bfs(init_lst):
     if game(init_lst):
         return 0
 
-    dq = deque([ init_lst ])
+    dq = deque([ [] ])
 
     while dq:
-        lst = dq.popleft()
+        add_lst = dq.popleft()
+
+        lst = init_lst + add_lst
 
         if game(lst):
-            return len(lst) - len(init_lst)
+            return len(add_lst)
 
-        if len(lst) == len(init_lst):
-            row, col = -1, -1 
-        else:
+        if add_lst:
             row, col = lst[-1]
+        else:
+            row, col = -1, -1 
 
         # 새로운 다리 놓을 후보
         for r in range(H):
             for c in range(col, N):
                 if (c > col or r > row) and (r, c-1) not in lst and (r, c) not in lst and (r, c+1) not in lst:
-                    dq.append( lst+[(r, c)] )
+                    dq.append( add_lst+[(r, c)] )
     else:
         return -1
 
@@ -55,6 +57,6 @@ for tc in range(1, T+1):
         a, b = map(int, input().split())
         init_lst.append( (a-1, b) )
 
-    res = float('inf')
+    res = (N-1) * H
 
     print(f'#{tc} {sim_bfs(init_lst)}')
