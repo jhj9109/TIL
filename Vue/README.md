@@ -6,3 +6,7 @@
 - Computed : 선언형, 캐싱 by 의존성
 - Watch : 명령형
 
+## 2. Vuex
+
+- Vuex 사용하는 이점
+- Store
