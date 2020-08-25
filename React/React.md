@@ -363,3 +363,234 @@ export default EventPractice;
 
 - 리액트에서의 이벤트는 JS or jQuery와 유사
 - 8장의 useReducer 와 커스텀 Hooks 사용하면 더욱 편리 할 것임
+
+# 5 React - ref
+
+> reference
+>
+> 함수형 컴포넌트에서 ref는 Hooks를 사용 => 8장에서 다룰것임
+
+- DOM에 이름 달기
+  - HTML : `id`
+  - React Component : `ref`
+- Why not `id` but `ref` ?
+  - `id` : unique 해야함, 중복 컴포넌트 사용 => 중복 id 발생
+  - `ref` : **전역적으로 작동하지 않고**, **컴포넌트 내부**에서만 작동
+  - id를 사용할때는 id 뒷부분에 추가 텍스트를 붙여서 중복 id 발생을 방지한다.
+
+## 5.1 ref 사용하는 때
+
+**DOM을 꼭 직접적으로 건드려야 할 때!!!**
+
+- input 값 => state로 접근
+- focus => DOM에 직접 접근 필요! => ref 사용
+
+## 5.2 ref 사용
+
+- 콜백 함수를 통한 ref 설정
+
+  - ```react
+    <input ref={ (ref) => {this.설정하고자하는이름=ref} }/>
+    ```
+
+- createRef를 통한 ref 설정
+
+  - ```react
+    input = React.createRef();
+    handleFocus = () => {
+        this.input.current.focus();
+    }
+    render() {
+        return {
+            <div>
+                <input ref={this.input} />
+            </div>
+        }
+    }
+    ```
+
+  - `this.이름.current` : current 까지 붙여서 접근해야 한다.
+
+## 5.3 컴포넌트에 ref 달기
+
+- **컴포넌트 내부에 있는 DOM**을 **컴포넌트 외부**에서 사용시 ref 활용
+- 예시 : JS로 스크롤바 내리는 메서드
+  - DOM 값 사용
+    - scrollTop : 세로 스크롤바 위치 (0~350)
+    - scrollHeight : 스크롤이 있는 박스안의 높이(650)
+    - clientHeight: 스크롤이 있는 박스의 높이(300)
+    - 맨아래로 내린다는것 => 스크롤 위치 = 650 - 300
+
+```react
+// ScrollBox.js
+import React, { Component } from 'react';
+
+class ScrollBox extends Component {
+    scrollToBottom = () => {
+        const { scrollHeight, clientHeight } = this.box;
+        this.box.scrollTop = scrollHeight - clientHeight;
+	}
+    render() {
+        const style = {
+            border: '1px solid black',
+            height: '300px',
+            width: '300px',
+            overflow: 'auto',
+            position: 'relative'
+        };
+        
+        const innerStyle = {
+            width: '100%',
+            height: '650px',
+            background: 'linear-gradient(white, black)'
+        }
+        
+        return (
+            <div
+                style={style}
+                ref={ (ref) => {this.box=ref }}>
+                <div style={innerStyle}/>
+            </div>
+            	
+        );
+    }
+}
+
+export default ScrollBox;
+```
+
+```react
+// App.js
+import React, { Component } from 'react';
+import ScrollBox form './ScrollBOx'
+
+class App extends Component {
+    render() {
+        return (
+        	<div>
+                <ScrollBox ref={(ref) => this.scrollBox=ref} />
+                <button onClick={() => this.scrollBox.scrollToBottom()}>
+                    맨 밑으로
+                </button>
+	        </div>
+        )
+    }
+}
+                    
+export default App;
+```
+
+- 팁
+  - onClick에 화살표 함수 사용 => 버튼을 누르 시점에 this.scrollBox가 설정 되어 있으므로 에러가 뜨지 않음
+  - But `onClick = {this.scrollBox.scrollToBottom}` 으로 작성하면, 렌더링 시, this.scrollBox 값이 undefiner이므로 this.scrollBox.scrollToBottom 값을 읽어 올때 오류가 발생
+
+## 5.4 정리
+
+- 컴포넌트 내부에서 DOM 직접 접근 시 ref를 사용한다.
+- 단, 컴포넌트끼리 데이터 교류시 ref 사용은 잘 못된 것 이다.
+  - 컴포넌트간 데이터 교류는 부모 <=> 자식 흐름으로 교류해야 합니다
+  - Redux, Context API 활용하여 데이터 교류하는 효율적인 방법을 배웁니다.
+- 함수형 컴포넌트 `useRef` 라는 Hook 함수를 사용
+
+
+
+# 6 React - Component 반복
+
+## 6.1 JS 배열의 map()
+
+### map()
+
+- 각 요소를 원하는 규칙에 따라 변환후 새로운 배열을 생성
+- `arr.map(callback, [thisArg])`
+- 파라미터
+  - callback
+    - **currentValue** : 현재 처리하고 있는 요소
+    - **index** : 현재 처리하고 있는 요소의 index 값
+    - **array** : 현재 처리하고 있는 원본 배열
+  - thisArg : callback 함수 내부에서 사용한 this 레퍼런스
+- 예제
+  - `var b = a.map(function(num){return num*num})`
+  - `const b = a.map(num => num*num)`
+
+## 6.2 데이터 배열을 컴포넌트 배열로 변환하기
+
+- 예제
+  - const lst = arr.map(name => <li>{name}</li>)
+  - retrun <ul>{lst}</ul>
+  - key 에러가 남 => 6.3으로 gogo
+
+## 6.3 key
+
+- 컴포넌트 배열을 렌더링할때 어떤 원소에 변동이 있는지 알아낼때 사용
+- 설정 : map 의 callback 함수에서 컴포넌트 props 설정하듯이 설정
+- `arr.map( (name,index) => <li key={index}>{name}</li>)`
+- 단, index를 key 사용시 배열이 변경되면 효율적인 리렌더링 불가
+
+## 6.4 응용
+
+- id 값을 key로 설정
+- `concat`
+  - 배열의 내장함수
+  - concat : 새로운 배열을 만들어 준다
+  - push : 기존 배열 자체를 변경시킨다
+  - 리액트에서 상태의 업데이트는 기존 상태를 유지하면서 새로운 값을 상태로 설정하므로 concat을 활용하였다.
+  - => 불변성 유지
+- `filter`
+  - 배열의 내장함수
+  - 특정 항목을 지우는데 용이
+  - 원본을 훼손시키지 않은채, 새로운 배열을 만들어 준다.
+
+```react
+import React, {useState} from 'react'
+
+const IterationSample = () => {
+    // 초기 상태 설정
+    const [names, setNames] = useState([
+        {id : 1, text: "첫사람"},
+        {id : 2, text: "눈사람"}
+    ]);
+    const [inputText, setInputText] = useState('');
+    const [nextId, setNextId] = useState(3); // 새로운 항목 추가시 사용 id
+    const nameList = names.map(name => <li key={name.id}>{name.text}</li>);
+                    
+    // 데이터 추가 기능
+    const onChange = e => setInputText(e.target.value);
+    const onClick = () => {
+        const nextNames.concat({
+          id: nextId,
+          text: inputText  
+        })
+        setNames(nextNames)
+        setNextId(nextId+1)
+        setInputText('')
+    }
+    
+    // 데이터 삭제 기능
+    const onRemove = id => {
+        const nextNames = nextName.filter(name => name.id !== id)
+        setNames(nextNames)
+    }
+    const namesList = name.map(name => <li key={name.id} onDoubleClick={() => onRemove(name.id)}>{name.text}</li>)
+    return (
+        <>
+            <input value={inputText} onChange={onChange} />
+            <button onClick={onClick}>추가</button>
+    		<ul>{nameList}</ul>
+        <>
+                               
+                               
+    )
+        
+}
+export default IterationSample;
+```
+
+
+
+## 6.5 정리
+
+- key 값 유의
+- state 안에서 배열 수정시 배열에 직접 접근 X
+- concat, filter 등의 배열 내장 함수를 사용하여 새로운 배열을 생성
+- 생성된 배열을 set메서드로 전달해 state 값을 업데이트 한다.
+
