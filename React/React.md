@@ -760,3 +760,211 @@ componentDidCatch(error, info) {
 - concat, filter 등의 배열 내장 함수를 사용하여 새로운 배열을 생성
 - 생성된 배열을 set메서드로 전달해 state 값을 업데이트 한다.
 
+# 8. React - Hooks
+
+> 리액트 v16.8에서 도입
+
+## 8.1 useState
+
+> const [value, setValue] = useState(초기값)
+
+- 가변값 가능케함
+
+- 1개의 useState 함수는 1개의 상태값만 관리
+  - vue => state & mutaion 느낌 => useState를 비구조화할당
+
+## 8.2 useEffect
+
+> useEffect( () => { (기본 : 마운트) 실행 코드 }, [ watch 할 (state 나 props)] )
+
+- 리액트 컴포넌트 렌더링될 때마다 특정 작업 수행하는 Hook
+- componentDidMount + componentDidUpdate 로 이해해도 됨
+- 예시 `useEffect( () => console.log('렌더링이 완료되었습니다.'))`
+- clean up
+  - unmount || update 직전 작업 수행을 원할때 return cleanuFunction
+  - `useEffect( () => { 실행코드; return () => { clean up 코드; } })`
+- 마운트 or 언마운트시만 실행 => 2번째 인자로 [] 전달
+
+## 8.3 useReducer
+
+> useState 보다 더 다양한 컴포넌트 상황에 따라 다양한 상태를 업데이트 하고 싶을떄 사용하는 Hook => Redux를 배울때 17장에서 더 자세히 학습
+
+#### 리듀서
+
+- 현재 상태 `state`, 업데이트를 위한 데이터를 담은 `action` 을 전달받아
+- 새로운 상태(`state`)를 반환하는 함수
+- 불변성을 지켜주어야함
+
+```react
+function reducer(state, action) {
+    return { ... }; // 불변성을 지키면서 업데이트한 새로운 state를 반환
+}
+```
+
+- useRecucer에서는 액션 객체에 `type`이 반드시 필요하지 않음
+- 단, Redux에서 사용하는 액션 객체에는 어떤 액션인지 알려주는 `type` 필수
+
+```react
+// 액션 값 형태
+{
+    type: 'INCREMENT',
+	// 다른 값들이 필요하다면 추가로 들어감
+}
+```
+
+#### 예제코드 (카운터)
+
+```react
+import React, { useReducer } from 'react'
+
+function reducer(state, action) { // action을 매개변수로 보면 될까? 싶네
+    switch (action.type) {
+        case 'INCREMENT':
+            return { value: state.value + 1}
+        case 'DECREMENT':
+            return { value: state.value - 1}
+        default:
+            return state // 아무것도 하지 않을때 기존 상태 반환
+    }
+}
+
+const Counter = () => {
+    const [state, dispatch] = useReducer(reducer, { value: 0 })
+    
+    return (
+        <div>
+        	<p> {state.value}</p>
+            <button onClick={() => dispatch({ type: 'INCREMENT' })}>+1</button>
+            <button onClick={() => dispatch({ type: 'DECREMENT' })}>-1</button>
+        </div>
+    )
+}
+```
+
+#### 활용법
+
+>  [state 값, dispatch 함수] = useReducer(리듀서함수, 기본값)
+
+- `state` : 현재 가리키고 있는 상태
+- `dispatch` : 액션 트리거 함수, 파라미터로 `action` 을 넣어 주면 `리듀서 함수`가 호출
+- 장점 : 업데이트 로직을 컴포넌트 바깥으로 빼낼 수 있다.
+
+#### 인풋 상태 관리
+
+- `action` :어떤 값도 활용 가능
+  - 아래 예제에선 `e.target` 값을 전달했고
+  - 위 예제에선 `{type: '값'}` 객체로 전달
+
+```react
+// Info.js
+// 해석 : state는 name과 nickname을 포함한 객체 => state를 객체로 업데이트 하여 return
+// => ...state로 기존값 불러오고, [계산된 key]: value 로 state 객체를 업데이트할 인자 생성
+import React, { useReducer } from 'react'
+
+function reducer(state, action){
+    return {
+        ...state,
+        [action.name]: action.value
+    }
+}
+
+const Info = () => {
+    const [state, dispatch] = useReducer(reducer, {
+        name: '',
+        nickname: ''
+    })
+    const { name, nickname } = state
+    const onChange = e => {
+        dispatch(e.target)
+    }
+    
+    return (
+        <div>
+            <div>
+                <input name="name" value={name} onChange={onChange}/>
+	            <input name="nickname" value={nickname} onChange={onChange}/>
+            </div>
+            <div>
+                <b>이름:</b> {name}, <b>닉네임:</b> {nickname}
+            </div>
+        </div>
+    )
+}
+
+export default Info
+```
+
+## 8.4 useMemo
+
+> 함수형 컴포넌트 내부에서 발생하는 연산 최적화
+
+## 8.5 useCallback
+
+> useMemo와 유사
+>
+> 이벤트 핸들러 함수 원할때만 생성 => 렌더링 성능 최적화
+
+## 8.6 useRef
+
+> 함수형 컴포넌트에서 ref 쉽게 사용케함
+
+## 8.7 커스텀 Hook 만들기
+
+```react
+useInputs.js
+import { useReducer } from 'react'
+
+// state, action => newState => dispatch
+// newState가 state에만 의존적일 경우, useState보다 useReducer가 좋다
+function reducer(state, action){
+    return {
+        ...state,
+        [action.name]: action.value
+    }
+}
+
+export default function useInputs(initialForm) {
+	const [state, dispatch] = useReducer(reducer, initialForm)
+    const onChange = e => {
+        dispatch(e.target)
+    }
+    return [state, onChange]
+}
+```
+
+```react
+// Info.js
+
+import React from 'react'
+import useInputs from './useInputs'
+
+const Info = () => {
+    const [state, onChange] = useInputs({
+        name: '',
+        nickname: ''
+    })
+    const { name, nickname } = state
+    
+    return (
+    	<div>
+        	<div>
+            	<input name="name" value={name} onChange={onChange}/>
+                <input name="nickname" value={nickname} onChange={onChange}/>
+            </div>
+            <div>
+            	<b>이름:</b> {name}
+                <b>닉네임:</b> {nickname}
+            </div>
+        </div>
+    )
+}
+
+export default Info
+```
+
+## 8.8 다른 Hooks
+
+다른 개발자의 Hooks 리스트
+
+- 링크1 : https://nikgraf.github.io/react-hooks
+- 링크2 : https://github.com/rehooks/awesome-react-hooks
