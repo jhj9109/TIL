@@ -968,3 +968,7 @@ export default Info
 
 - 링크1 : https://nikgraf.github.io/react-hooks
 - 링크2 : https://github.com/rehooks/awesome-react-hooks
+
+## 8.9 정리
+
+- Hooks 패턴을 사용하여, 클래스형 컴포넌트를 작성하지 않고도 대부분의 기능 구현 가능
