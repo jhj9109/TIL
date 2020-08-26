@@ -585,6 +585,172 @@ const IterationSample = () => {
 export default IterationSample;
 ```
 
+# 7 React - Component LifeCycle Method
+
+> 클래스형 컴포넌트에서만 사용가능
+>
+> 함수형 컴포넌트 => Hooks 사용
+
+## 7.1 LifeCycle Method 이해
+
+- Will 접두사 : 어떤 작업을 작동하기 전에 실행되는 메서드
+- Did 접두사 : 어떤 작업을 작동한 후에 실행되는 메서드
+
+### 7.1.1 mount
+
+#### DOM 생성되고 웹 브라우저상에 나타나는 것이 Mount
+
+#### 호출 메서드
+
+- `constructior` : 클래스 생성자
+- `getDerivedStateFromProps` : props에 있는 값을 state에 넣을 때 사용하는 메서드
+- `render` : 우리가 준비한 UI를 렌더링 하는 메서드
+- `componentDidMount` : 컴포넌트의 마운트가 끝난 후 호출하는 메서드
+
+### 7.1.2 update
+
+#### 컴포넌트가 업데이트 되는 4가지 경우
+
+1. props가 바뀔때
+2. state가 바뀔때
+3. 부모 컴포넌트가 리렌더링 될때
+4. this.forceUpdate로 강제로 렌더링을 트리거할 때
+
+#### 호출 메서드
+
+- `getDervedStateFromProps` : props의 변화에 따라 state 값에도 변화를 주고 싶을때 사용
+- `shouldComponentUpdate` : 컴포넌트가 리렌더링을 해야 할지 결정하는 메서드, t/f 반환, 특정 함수에서 this.forceUpdate() 함수를 호출하면 이 과정은 생략하고 render 함수가 호출됨
+- `render`
+- `getSnapShotBeforeUpdate` : 컴포넌트 변화를 DOM에 반영하기 바로 직전에 호출되는 메서드
+- `componentDidUpdate`
+
+## 7.1.3 unmount
+
+> 컴포넌트를 DOM에서 제거하는 것
+
+#### 호출 메서드
+
+- `componentWillUnmount` 
+
+## 7.2 LifeCycle Method 살펴보기
+
+### 7.2.1 render()
+
+> render() { ... }
+
+- 메서드 안에서 this.props 와 this.state에 접근 가능
+- 리액트 요소 반환
+- event 설정이 아닐 곳에 setState 사용 X, 브라우저의 DOM 접근 X
+- DOM에서 정보를 가져오거나 state 변화 줄 떄에는 `componentDidMount`에서 처리
+
+### 7.2.2 constructor
+
+> constructior(props) { ... }
+
+- 컴포넌트의 생성자 메서드, 초기 state 설정
+
+### 7.2.3 getDerivedStateFromProps
+
+> 리액트 v16.3 이후 등장
+>
+> props로 받아 온 값을 state에 동기화하는데 사용
+>
+> 마운트 및 업데이트 시 호출
+
+```react
+static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.value !== prevState.value) { // 조건에 따라 특정 값 동기화
+        return { value: nextProps.value }
+    }
+    return null; // state를 변경할 필요가 없다면 null을 반환
+}
+```
+
+### 7.2.4 componentDidMount
+
+> componentDidMount() { ... }
+
+- 컴포넌트 생성 및 렌더링을 마친후 실행되는 메서드
+- JS library or framwork의 함수 호출
+- 이벤트 등록
+- **setTimeout, setInterval, 네트워크 요청** 같은 **비동기 작업** 처리
+
+### 7.2.5 shouldComponentUpdate
+
+> shouldComponentUpdate(nextProps, nextState) { ... }
+
+- props or state 변경시 => 리렌더링 여부 결정 (t/f 반환)
+- `this.props` 와 `this.state` , `nextProps`와 `nextState`로  접근 가능
+- 성능 최적화시 알고리즘에 따라 리렌더링 방지시 false 반환
+
+### 7.2.6 getSnapshotBeforeUpdate
+
+> 리액트 v16.3 이후 등장
+>
+> render 만들어진 결과물이 브라우저에 실제 반영되기 직전 호출
+
+- return 값은 => `componentDidUpdate` 메서드에 3번째 파라미터인 snapshot 값으로 전달
+- 주로 업데이트하기 직전의 값을 참고할 일이 있을때 활용
+  - 예 : **스크롤바 현재 위치**
+
+```react
+getSnapshotBeforeUpdate(prevProps, prevState) {
+	if(prevState.array !== this.state.array) {
+        const { scrollTop, scrollHeight } = this.list
+        return { scrollTop, scrollHeight }
+    }
+}
+```
+
+### 7.2.7 componentDidUpdate
+
+> componentDidUpdate(prevProps, prevSate, snapshot) { ... }
+
+- 리렌더링 완료후 실행
+- 업데이트가 끝난 직후로 DOM 관련 처리 가능
+- prevProps, prevSate 를 통해 컴포넌트가 이전에 가졌던 데이터 접근 가능
+- snapshot 값도 전달 받아 활용 가능
+
+## 7.2.8 componentWillUnmount
+
+> componentWillUnmount() { ... }
+
+- 컴포넌트를 DOM에서 제거시 실행
+- `componentDidMount`에서 등록한 이벤트, 타이머, 직접 생성한 DOM을 여기서 제거
+
+## 7.2.9 componentDidCatch
+
+> 리액트 v16 추가
+>
+> 렌더링 도중 에러 발생시 먹통이 되지 않고 오류 UI 출력
+
+```react
+componentDidCatch(error, info) {
+	this.setState({
+		error: true
+	})
+    console.log({error, info})
+}
+```
+
+- error : 어떤 에러가 발생했는지
+- info : 어디에 있는 코드에서 오류가 발생했는지
+- console.log 대신 서버 API 호출하면 에러 로그 수집 가능
+- 단, 컴포넌트 자신의 에러를 잡을 수 없고, this.props.children으로 전달되는 컴포넌트 에러만 가능
+- => 7.3.3 에러 잡아내기로 이동
+
+## 7.3 LifeCycle Method 사용하기
+
+
+
+## 7.4 정리
+
+- 컴포넌트 상태 변화시마다 트리거 되는 메서드
+- 활용
+  - 서드파티 라이브러리 사용시
+  - DOM 직접 접근시
+  - 성능 개선 : shouldComponentUpdate => 11장
+
 
 
 ## 6.5 정리
