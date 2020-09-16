@@ -1,36 +1,41 @@
-# Firebase
+# Firebase 시작
 
-- 처음에는 DB로 시작 => Google에 인수 => 확장
-- AWS의 경쟁자는 amplify
-- Cloud Firestore : BE 코드 없이 DB를 다룰 수 있음
+- Firebase Google 로그인
 
-- Firebase ML : 머신러닝
-- Cloud Functions : severless fuctions 제공, AWS의 lambda와 유사
-- Cloud Storage : 파일(사진) 업로드에 활용, AWS의 S3와 유사  
+- 프로젝트 생성
 
-- Hosting : assets 배포 or React Application 배포
-- Authentication : 인증
-- Realtime Database : 오리지널 Firebase, Realtime이 특징, 지금은 많이 활용하지 않음
-- Crashlytics : application의 충돌 분석
-- Performance Monitoring : 성능 측정
-- Test Lab : 웹사이트 기기별 테스트
-- App DIstribution : ios, android 배포
+  - 이름 설정
+  - 구글 애널리틱스 사용 X
 
-## 활용할 것들
+- 앱 등록
 
-### Cloud Firestore
+  - 이름 설정
 
-> BE 코드 없이 DB를 다룰 수 있음
+  - Add Firebase SDK
 
-### Hosting
+    - `npm i --save firebase`
 
-> assets 배포 or React Application 배포
+      - --save : 의존성 추가 옵션 => 실제론 입력하지 않아도 동일한 동작
 
-### Authentication
+    - src / firebase.js 생성
 
-> 인증
+      - ES6 문법으로 import & export
+      - 앱에서 firebase 시작 : `firebase.initializeApp(firebaseConfig)`
 
-### Cloud Storage
+    - ```js
+      import * as firebase from "firebase/app"
+      
+      const firebaseConfig = {
+          apiKey: "AIzaSyCaiX3_Gt_9ql-peIENra7nfV7OXZZUZq0",
+          authDomain: "clonig-twitter.firebaseapp.com",
+          databaseURL: "https://clonig-twitter.firebaseio.com",
+          projectId: "clonig-twitter",
+          storageBucket: "clonig-twitter.appspot.com",
+          messagingSenderId: "759296892824",
+          appId: "1:759296892824:web:4cbbe1a1eab4c5b427d5ed"
+      };
+      
+      export defalut firebase.initializeApp(firebaseConfig);
+      ```
 
-> 파일(사진) 업로드에 활용, AWS의 S3와 유사  
-
+      
