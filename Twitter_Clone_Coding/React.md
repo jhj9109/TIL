@@ -55,3 +55,18 @@
 
 - `const [isLoggedIN, setLoggedIn] = useState(false)`
 - `<AppRouter isLoggedIn={isLoggedIn} />` 
+
+# Absolute import
+
+- root 경로에 jsconfig.json 파일을 생성한다.
+
+- baseUrl을 `src/` 로 설정하는 옵션을 작성한다.
+
+  ```json
+  {
+      "compilerOptions": {
+          "baseUrl": "src"
+      },
+      "include": ["src"]
+  }
+  ```
