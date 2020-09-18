@@ -56,7 +56,7 @@
 - `const [isLoggedIN, setLoggedIn] = useState(false)`
 - `<AppRouter isLoggedIn={isLoggedIn} />` 
 
-# Absolute import
+# Absolute imports
 
 - root 경로에 jsconfig.json 파일을 생성한다.
 

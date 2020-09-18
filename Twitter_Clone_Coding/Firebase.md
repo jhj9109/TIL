@@ -79,4 +79,18 @@
   REACT_APP_APP_ID=값
   ```
 
+## auth 서비스 호출
+
+- firebase.js => fbase.js 에서 다음과 같이 auth를 호출하여 export 한다.
+
+  ```react
+  ...
+  firebase.initializeApp(firebaseConfig);
+  export const authService = firebase.auth();
+  ```
+
   
+
+### 현재 로그인한 유저
+
+> authService.currentUser
