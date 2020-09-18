@@ -54,4 +54,4 @@
 ## App.js
 
 - `const [isLoggedIN, setLoggedIn] = useState(false)`
-- `<AppRouter isLoggedIn={isLoggedIn} />`
+- `<AppRouter isLoggedIn={isLoggedIn} />` 
