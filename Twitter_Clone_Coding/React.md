@@ -47,4 +47,11 @@
 - Fragment `<> </>`  : 부모 요소 없이 여러 요소를 사용하고 싶을때 활용
 - `const [isLoggedIN, setLoggedIn] = useState(false)`
   - 로그인 여부 T / F
-  - 초기값은 false
+  - 초기값은 false 
+  - 한 가지 역할만 하도록 App.js로 이동
+  - `const AppRouter = ({ isLoggedIn }) =>`
+
+## App.js
+
+- `const [isLoggedIN, setLoggedIn] = useState(false)`
+- `<AppRouter isLoggedIn={isLoggedIn} />`
